@@ -30,7 +30,7 @@ def solveLinearSystem(jacobi: np.ndarray, Fx: np.ndarray):
 	return y
 
 def display(x: np.ndarray, y: np.ndarray, n: int):
-	print(f"Iterator {n}th -- Solution: {x} -- The accuracy: {LA.norm(y, ord=None)}")
+	print(f"{n}th -- Solution: {x} -- The error: {LA.norm(y, ord=None)}")
 
 
 
@@ -58,7 +58,7 @@ def newton_raspson(x: np.ndarray, epxilon=10e-10, N=1000):
 		y = solveLinearSystem(jacobi=jacobi, Fx=Fx)
 
 		# Update solution
-		x = x - y
+		x = np.abs(x - y)
 		display(x, y, n)
 
 		n = n + 1
