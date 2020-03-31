@@ -7,8 +7,8 @@ w = 0.145
 
 dH_trau = 365736  # kJ/kmol
 dH_H2O = -214890  # kJ/kmol
-dH_H20_l = -214890 # kJ/kmol
-dH_H20_k = -214890 # kJ/kmol
+dH_H2O_l = -214890 # kJ/kmol
+dH_H2O_k = -214890 # kJ/kmol
 
 A_H2 = 3.249
 B_H2 = 0.422/(1e3)

@@ -1,7 +1,9 @@
 # Store all parameters of problem
 import numpy as np
-from main import ER, T2
 from constants import *
+
+ER = 0.2
+T2 = 550 + 273.15
 
 m = ER * (1 + 1.28/4 - 0.64/2)        # Calculate when have ER
 q = 137.28 * m * MC1 / 18 / (1-MC1)   # Calculate when have ER

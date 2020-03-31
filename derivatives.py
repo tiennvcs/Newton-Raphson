@@ -1,7 +1,5 @@
 # Definition of all derivatives function in functions.py
-from parameters import (a, b, w, dH_trau, dH_H2O_l, dH_H2O_k)
-from parameters import (q, m, K1, K2, dH_H2, dH_CO, dH_CO2, dH_N2, dH_CH4)
-
+from parameters import *
 
 def derivF_1(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     """
@@ -20,7 +18,7 @@ def derivF_1(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     derf_n4 = 1
     derf_n5 = 0
     derf_n6 = 1
-    return [derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6]
+    return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_2(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     """
@@ -39,7 +37,7 @@ def derivF_2(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     derf_n4 = 0
     derf_n5 = 2
     derf_n6 = 4
-    return [derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6]
+    return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_3(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     """
@@ -58,7 +56,7 @@ def derivF_3(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     derf_n4 = 2
     derf_n5 = 1
     derf_n6 = 0
-    return [derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6]
+    return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 
 def derivF_4(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
@@ -78,7 +76,7 @@ def derivF_4(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     derf_n4 = 0
     derf_n5 = 0
     derf_n6 = -1
-    return [derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6]
+    return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_5(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     """
@@ -97,7 +95,7 @@ def derivF_5(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     derf_n4 = -n2
     derf_n5 = K2 * n3
     derf_n6 = 0
-    return [derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6]
+    return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_6(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     """
@@ -116,7 +114,7 @@ def derivF_6(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     derf_n4 = dH_CO2
     derf_n5 = dH_H2O_k
     derf_n6 = dH_CH4
-    return [derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6]
+    return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 
 def main():
