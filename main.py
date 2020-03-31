@@ -1,6 +1,5 @@
 import argparse
 import numpy as np
-import parameters
 from functions import (f1, f2, f3, f4, f5, f6)
 from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
 
@@ -14,11 +13,11 @@ def newton_raspson(init_values: list, epxilon=10e-10):
 		- An array contains all root of equation system.
 		- A number of iterators for each value.
 	"""
-
+	import parameters
 	solution = np.array([])
 	iterators = np.array([])
 
-	
+
 
 	return (solution, iterators)
 
@@ -40,7 +39,6 @@ def main(args):
 	print(" |--------------------------------------------------------------------------------------------------|")
 	print(" ----------------------------------------------------------------------------------------------------")
 
-	print(derivF_6(0.1, 0.2, -0.3, 1, 2, 3))
         # Solve the problem with default values.
 	solution, iterators = newton_raspson(init_values=init_values, epxilon=epxilon)
 

@@ -1,6 +1,5 @@
 # Definitions of all funtions of system equations and their derivatives.
-from parameters import (a, b, w, dH_trau, dH_H2O_l, dH_H2O_k)
-from parameters import (q, m, K1, K2, dH_H2, dH_CO, dH_CO2, dH_N2, dH_CH4)
+from parameters import *
 
 
 def f1(n1: float, n2: float, n3:float, n4:float, n5:float, n6:float):
