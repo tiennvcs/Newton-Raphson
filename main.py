@@ -15,6 +15,7 @@ def newton_raspson(init_values: list, epxilon=10e-10):
 	from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
 	
 	
+	
 	solution = np.array([])
 	iterators = np.array([])
 
