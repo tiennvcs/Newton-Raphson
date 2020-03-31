@@ -15,11 +15,11 @@ def f3(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
     return f
 
 def f4(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
-    f = K_1 * n2**2 - n6
+    f = K1 * n2**2 - n6
     return f
 
 def f5(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
-    f = K_2 * n3*n5 - n2*n4
+    f = K2 * n3*n5 - n2*n4
     return f
 
 def f6(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
