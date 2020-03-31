@@ -1,8 +1,5 @@
 import argparse
 import numpy as np
-from functions import (f1, f2, f3, f4, f5, f6)
-from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
-
 
 def newton_raspson(init_values: list, epxilon=10e-10):
 	"""
@@ -14,6 +11,10 @@ def newton_raspson(init_values: list, epxilon=10e-10):
 		- A number of iterators for each value.
 	"""
 	import parameters
+	from functions import (f1, f2, f3, f4, f5, f6)
+	from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
+	
+	
 	solution = np.array([])
 	iterators = np.array([])
 
@@ -47,11 +48,7 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
 	parser.add_argument("-ER", help="Hệ số không khí cấp", default=0.2) # 0.25, 0.3, 0.35, 0.4
 	parser.add_argument("-T2", help="Nhiệu độ vừng khử", default=550)
-	parser.add_argument("--init_values",
-						help="Nghiệm khởi tạo trước khi chạy thuật toán",
-						default=np.array(
-								[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]))
-	parser.add_argument("--epxilon",
-						help="The accuracy of method", default=10e-10)
+	parser.add_argument("--init_values", help="Nghiệm khởi tạo trước khi chạy thuật toán", default=np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1]))
+	parser.add_argument("--epxilon", help="The accuracy of method", default=10e-10)
 	args = parser.parse_args()
 	main(args)
