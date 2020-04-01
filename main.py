@@ -93,7 +93,8 @@ def main(args):
 
         # Solve the problem with default values.
 	solution, iterators = newton_raspson(x=x, epxilon=epxilon, N=N)
-
+	
+	print("Phần trăm nghiệm thực tế: ", solution/np.sum(solution))
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
