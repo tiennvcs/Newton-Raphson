@@ -1,9 +1,12 @@
 import argparse
 import numpy as np
+import sys
+import time
 from numpy import linalg as LA
 from functions import (f1, f2, f3, f4, f5, f6)
 from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
 
+	
 def F(x: np.ndarray):
 	F = np.array([])
 	f1_x = f1(x[0], x[1], x[2], x[3], x[4], x[5])
@@ -46,28 +49,22 @@ def newton_raspson(x: np.ndarray, epxilon=10e-10, N=1000):
 	n = 1
 	y = np.ones(6)
 	while ((LA.norm(y, ord=None) > epxilon or n == 1) and n <= N): # Use l2 norm
-
 		# Calculate the F(x)
 		Fx = F(x=x)
-
 		# Calculate the Jacobian matrix
 		jacobi = Jacobian(x=x)
-
-		# Solve the nxn linear system J(x)y = F(x)
+		# Solve the n x n linear system J(x)y = F(x)
 		y = solveLinearSystem(jacobi=jacobi, Fx=Fx)
-
 		# Update solution
 		x = x - y
-
 		for i in range(6):
 			if x[i] < 0:
 				x[i] = np.random.rand()
-
-		display(x, y, n)
-
+		# if n % 10 == 0:
+			# time.sleep(1/n)
+			# display(x, y, n)
 		n = n + 1
-
-	return (x, n)
+	return (x, n, LA.norm(y, ord=None))
 
 
 def main(args):
@@ -76,37 +73,47 @@ def main(args):
 	x = args.init_values
 	epxilon = float(args.epxilon)
 	N = int(args.N)
-
+	
 	np.set_printoptions(precision=4)
 
 	print(" -----------------------------------------------------------------------------------------------------------------")
 	print(" |---------------------------------------------------------------------------------------------------------------|")
 	print(" |                           Chương trình tìm nghiệp xấp xỉ bằng phương pháp Newton - Raspson                    |")
 	print(" -----------------------------------------------------------------------------------------------------------------")
-	print(" |Các giá trị đầu vào:                                                                              |")
+	print(" | Các giá trị đầu vào")
 	print(f" | \tHệ số không khí cấp ER: {ER}")
 	print(f" | \tNhiệt độ vùng khử  T2: {T2}")
-	print(f" | \tGiá trị khởi tạo [n_1, n_2, n_3, n_4, n_5, n_6]: {x}")
+	print(f" | \tVector nghiệm khởi tạo  [n_1, n_2, n_3, n_4, n_5, n_6]: {x}")
 	print(f" | \tĐộ chính xác cho trước epxilon: {epxilon}")
 	print(" |---------------------------------------------------------------------------------------------------------------|")
 	print(" -----------------------------------------------------------------------------------------------------------------")
-
-        # Solve the problem with default values.
-	solution, iterators = newton_raspson(x=x, epxilon=epxilon, N=N)
 	
-	print("Phần trăm nghiệm thực tế: ", solution/np.sum(solution))
+	key = input(" | This information is true (Yes/No)?\n | Please enter your confirm ? ")
+	if key.upper() == "YES" or key.upper() == "Y":
+        	# Solve the problem with default values
+		print(" ----------------------------------------------------------------------------------------------------------------")
+		print(" | The result archived from method showing bellow")
+		solution, iterators, error  = newton_raspson(x=x, epxilon=epxilon, N=N)
+		print(f" | \tThe final solution is: {solution}")
+		print(f" | \tThe number of iterators is {iterators}")
+		print(f" | \tThe error of algorithms is {error}")
+		print(f" | \tn_i/n_t is ", (solution/np.sum(solution))*100)
+		print(" |---------------------------------------------------------------------------------------------------------------|")
+	elif key.upper() == "NO" or key.upper() == "N":
+		print("Please run again to solve problem and check your parameters")
+		exit(1)
+
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
 	parser.add_argument("-ER", help="Hệ số không khí cấp", default=0.2) # 0.25, 0.3, 0.35, 0.4
-	parser.add_argument("-T2", help="Nhiệu độ vừng khử", default=550)
+	parser.add_argument("-T2", help="Nhiệu độ vừng khử", default=550)   # 550, 600, 650, 600, 650
 	parser.add_argument(
 			"-init_values",
 			help="Nghiệm khởi tạo trước khi chạy thuật toán",
 			default=np.array(np.random.rand(6)))
 
-	parser.add_argument("-epxilon",
-						help="The accuracy of method", default=1e-10)
+	parser.add_argument("-epxilon", help="The accuracy of method", default=1e-10)
 	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
 	args = parser.parse_args()
 	main(args)

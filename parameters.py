@@ -1,10 +1,18 @@
 # Store all parameters of problem
 import numpy as np
+import sys
+import argparse
 from constants import *
 
-ER = 0.25
-T2 = 750 + 273.15
 
+if len(sys.argv) == 1:
+	ER, T2 = 0.2, 550 + 273.15
+elif len(sys.argv) == 3:
+	ER = float(sys.argv[2])
+	T2 = 550
+elif len(sys.argv) >= 5:
+	ER, T2 = float(sys.argv[2]), float(sys.argv[4])
+	
 m = ER * (1 + 1.28/4 - 0.64/2)        # Calculate when have ER
 q = 137.28 * m * MC1 / 18 / (1-MC1)   # Calculate when have ER
 
