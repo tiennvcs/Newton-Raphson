@@ -1,4 +1,4 @@
-# Definitions of all funtions of system equations and their derivatives.
+# Definitions of all funtions of system equations.
 from parameters import *
 
 

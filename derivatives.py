@@ -21,16 +21,6 @@ def derivF_1(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_2(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
-    """
-    @arguments:
-        - n_i (float) the variables of function
-    @return value:
-        - An array whose elements is derivate of function.
-    @note:
-        - The derivate of multivariable function is an vector.
-    """
-
-    # derf_n_i is giá trị đạo hàm riêng theo biến n_i của hàm số.
     derf_n1 = 0
     derf_n2 = 2
     derf_n3 = 0
@@ -40,16 +30,6 @@ def derivF_2(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_3(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
-    """
-    @arguments:
-        - n_i (float) the variables of function
-    @return value:
-        - An array whose elements is derivate of function.
-    @note:
-        - The derivate of multivariable function is an vector.
-    """
-
-    # derf_n_i is giá trị đạo hàm riêng theo biến n_i của hàm số.
     derf_n1 = 0
     derf_n2 = 0
     derf_n3 = 1
@@ -60,16 +40,6 @@ def derivF_3(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
 
 
 def derivF_4(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
-    """
-    @arguments:
-        - n_i (float) the variables of function
-    @return value:
-        - An array whose elements is derivate of function.
-    @note:
-        - The derivate of multivariable function is an vector.
-    """
-
-    # derf_n_i is giá trị đạo hàm riêng theo biến n_i của hàm số.
     derf_n1 = 0
     derf_n2 = 2 * K1
     derf_n3 = 0
@@ -79,16 +49,6 @@ def derivF_4(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_5(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
-    """
-    @arguments:
-        - n_i (float) the variables of function
-    @return value:
-        - An array whose elements is derivate of function.
-    @note:
-        - The derivate of multivariable function is an vector.
-    """
-
-    # derf_n_i is giá trị đạo hàm riêng theo biến n_i của hàm số.
     derf_n1 = 0
     derf_n2 = -n4
     derf_n3 = K2 * n5
@@ -98,16 +58,6 @@ def derivF_5(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     return np.array([derf_n1, derf_n2, derf_n3, derf_n4, derf_n5, derf_n6])
 
 def derivF_6(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
-    """
-    @arguments:
-        - n_i (float) the variables of function
-    @return value:
-        - An array whose elements is derivate of function.
-    @note:
-        - The derivate of multivariable function is an vector.
-    """
-
-    # derf_n_i is giá trị đạo hàm riêng theo biến n_i của hàm số.
     derf_n1 = 0
     derf_n2 = dH_H2
     derf_n3 = dH_CO
