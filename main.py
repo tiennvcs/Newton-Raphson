@@ -52,8 +52,8 @@ def displayExpectation(solution: np.ndarray):
 	percent3 = (solution[2] / sum_solution) * 100
 	percent4 = (solution[3] / sum_solution) * 100
 	percent6 = (solution[5] / sum_solution) * 100
-	print(f" | \t The percentages of solution vector:")
-	print(f" | \t\t* 12n_1/23.52 = {round(percent1, 3)} %")
+	print(f" |\tThe percentages of solution vector:")
+	print(f" | \t\t* 12n_1/23.52n_t = {round(percent1, 3)} %")
 	print(f" | \t\t* n_2/n_t     = {round(percent2, 3)} %")
 	print(f" | \t\t* n_3/n_t     = {round(percent3, 3)} %")
 	print(f" | \t\t* n_4/n_t     = {round(percent4, 3)} %")
@@ -79,16 +79,8 @@ def plotGraph(solutions: np.ndarray, ERs: list, T2: float, N: int):
 	ax.set_title('Quan sát sự thay đổi của nghiệm khi ER thay đổi', fontsize=20)
 	plt.xlim(0, np.max(ERs)+1)
 	plt.ylim(0, np.max(solution)+2)
-	plt.show()
-
-	saved = False
-	while saved==False:
-		key = input()
-		if key.upper() == 'S':
-			plt.savefig('figsize.png')
-		else:
-			break
-		
+	plt.savefig('result.png')
+	plt.show()	
 
 
 def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
@@ -134,7 +126,7 @@ def main(args):
 	print(" |---------------------------------------------------------------------------------------------------------------|")
 	print(" |                           Chương trình tìm nghiệp xấp xỉ bằng phương pháp Newton - Raspson                    |")
 	print(" -----------------------------------------------------------------------------------------------------------------")
-	print(" | Các giá trị đầu vào")
+	print(" | Các giá trị đầu vào                                                                                           |")
 	print(f" | \tHệ số không khí cấp ER: {ER}")
 	print(f" | \tNhiệt độ vùng khử  T2: {T2}")
 	print(f" | \tVector nghiệm khởi tạo  [n_1, n_2, n_3, n_4, n_5, n_6]: {x}")
@@ -145,14 +137,14 @@ def main(args):
 	key = input(" | This information is true (Yes/No)?\n | Please enter your confirm ? ")
 	if key.upper() == "YES" or key.upper() == "Y":
         	# Solve the problem with default values
-		print(" ----------------------------------------------------------------------------------------------------------------")
-		print(" | The result archived from method showing bellow")
+		print(" ----------------------------------------------------------------------------------------------------------------|")
+		print(" | The result archived from method showing bellow                                                                |")
 		solution, iterators, error  = newton_raspson(x=x, epxilon=epxilon, N=N)
 		print(f" | \tThe final solution is: {solution}")
 		print(f" | \tThe number of iterators is {iterators}")
 		print(f" | \tThe error of algorithms is {error}")
 		displayExpectation(solution)		
-		print(" |---------------------------------------------------------------------------------------------------------------|")
+		print(" ----------------------------------------------------------------------------------------------------------------")
 	elif key.upper() == "NO" or key.upper() == "N":
 		print("Please run again to solve problem and check your parameters")
 		exit(1)
