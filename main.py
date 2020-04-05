@@ -39,7 +39,7 @@ def display(x: np.ndarray, y: np.ndarray, n: int):
 def displayExpectation(solution: np.ndarray):
 	"""
 	n_t = n_1 + n_2 + n_3 + n_4 + n_5 + n_6
-	12n_1/23,52n_t = 20-40%
+	12n_1/23,52 = 20-40%
 	n_2/n_t = 5-6%
 	n_3/n_t = 17-20%
 	n_4/n_t = 1-3%
@@ -47,17 +47,18 @@ def displayExpectation(solution: np.ndarray):
 	"""
 	
 	sum_solution = np.sum(solution)
-	percent1 = (12*solution[0]/23.52/sum_solution)*100
+	percent1 = (12*solution[0]/23.52)*100
 	percent2 = (solution[1] / sum_solution ) * 100
 	percent3 = (solution[2] / sum_solution) * 100
 	percent4 = (solution[3] / sum_solution) * 100
 	percent6 = (solution[5] / sum_solution) * 100
 	print(f" |\tThe percentages of solution vector:")
-	print(f" | \t\t* 12n_1/23.52n_t = {round(percent1, 3)} %")
+	print(f" | \t\t* 12n_1/23.52 = {round(percent1, 3)} %")
 	print(f" | \t\t* n_2/n_t     = {round(percent2, 3)} %")
 	print(f" | \t\t* n_3/n_t     = {round(percent3, 3)} %")
 	print(f" | \t\t* n_4/n_t     = {round(percent4, 3)} %")
 	print(f" | \t\t* n_6/n_t     = {round(percent6, 3)} %")
+
 
 def plotGraph(solutions: np.ndarray, ERs: list, T2: float, N: int):
 	"""
@@ -110,7 +111,7 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 			# time.sleep(1/n)
 			# display(x, y, n)
 		n = n + 1
-	return (x, n, LA.norm(y, ord=None))
+	return (x, n-1, LA.norm(y, ord=None))
 
 
 def main(args):
@@ -124,13 +125,14 @@ def main(args):
 
 	print(" -----------------------------------------------------------------------------------------------------------------")
 	print(" |---------------------------------------------------------------------------------------------------------------|")
-	print(" |                           Chương trình tìm nghiệp xấp xỉ bằng phương pháp Newton - Raspson                    |")
+	print(" |                           Chương trình tìm nghiệm xấp xỉ bằng phương pháp Newton - Raspson                    |")
 	print(" -----------------------------------------------------------------------------------------------------------------")
 	print(" | Các giá trị đầu vào                                                                                           |")
 	print(f" | \tHệ số không khí cấp ER: {ER}")
 	print(f" | \tNhiệt độ vùng khử  T2: {T2}")
 	print(f" | \tVector nghiệm khởi tạo  [n_1, n_2, n_3, n_4, n_5, n_6]: {x}")
 	print(f" | \tĐộ chính xác cho trước epxilon: {epxilon}")
+	print(f" | \tSố vòng lặp giới hạn N: {N}")
 	print(" |---------------------------------------------------------------------------------------------------------------|")
 	print(" -----------------------------------------------------------------------------------------------------------------")
 	
