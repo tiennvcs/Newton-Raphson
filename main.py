@@ -82,8 +82,9 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 		- A number of iterators for each value.
 	"""
 	n = 1
+	positive_solution = np.random.rand(6)
 	y = np.ones(6)
-	while ((LA.norm(y, ord=None) > epxilon or n == 1) and n <= N): # Use l2 norm
+	while ((LA.norm(y, ord=None) > epxilon or n == 1)): # Use l2 norm
 		# Calculate the F(x)
 		Fx = F(x=x)
 		# Calculate the Jacobian matrix
@@ -92,14 +93,17 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 		y = solveLinearSystem(jacobi=jacobi, Fx=Fx)
 		# Update solution
 		x = x - y
-		for i in range(6):
-			if x[i] < 0:
-				x[i] = np.random.rand()
-		# if n % 10 == 0:
-			# time.sleep(1/n)
-			# display(x, y, n)
+		if (x > 0).all():
+			positive_solution = x[:]
+		else:
+			for i in range(6):
+				if x[i] < 0:
+					x[i] = np.random.rand()
+		
+		display(positive_solution, y, n)
 		n = n + 1
-	return (x, n-1, LA.norm(y, ord=None))
+
+	return (positive_solution, n-1, LA.norm(y, ord=None))
 
 
 def main(args):

@@ -41,7 +41,7 @@ def derivF_3(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
 
 def derivF_4(n1: float, n2:float, n3: float, n4: float, n5: float, n6: float):
     derf_n1 = 0
-    derf_n2 = 2 * K1
+    derf_n2 = 2 * K1 * n2
     derf_n3 = 0
     derf_n4 = 0
     derf_n5 = 0
