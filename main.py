@@ -7,7 +7,20 @@ from numpy import linalg as LA
 from functions import (f1, f2, f3, f4, f5, f6)
 from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
 
-	
+def getArguments():
+	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
+	parser.add_argument("-ER", help="Hệ số không khí cấp", default=0.2) # 0.25, 0.3, 0.35, 0.4
+	parser.add_argument("-T2", help="Nhiệu độ vừng khử", default=750)   # 750, 800, 850, 900
+	parser.add_argument(
+			"-init_values",
+			help="Nghiệm khởi tạo trước khi chạy thuật toán",
+			default=np.array(np.random.rand(6)))
+
+	parser.add_argument("-epxilon", help="The accuracy of method", default=1e-4)
+	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
+	args = parser.parse_args()
+	return args
+
 def F(x: np.ndarray):
 	F = np.array([])
 	f1_x = f1(x[0], x[1], x[2], x[3], x[4], x[5])
@@ -45,7 +58,6 @@ def displayExpectation(solution: np.ndarray):
 	n_4/n_t = 1-3%
 	n_6/n_t = 4-8%
 	"""
-	
 	sum_solution = np.sum(solution)
 	percent1 = (12*solution[0]/23.52)*100
 	percent2 = (solution[1] / sum_solution ) * 100
@@ -60,30 +72,6 @@ def displayExpectation(solution: np.ndarray):
 	print(f" | \t\t* n_6/n_t     = {round(percent6, 3)} %")
 
 
-def plotGraph(solutions: np.ndarray, ERs: list, T2: float, N: int):
-	"""
-	@parameters:
-		- solutions is a matrix that contain all solution vectors of system of equations.
-		- ERs (list): list of values ER we provide for the problem.
-		- T2 (float): the temparature we provide for the problem.
-		- N (int): the number of iterators
-	@return values:
-		- None
-	"""
-	
-	fig, ax = plt.subplots(figsize=(9,6))
-	for i in len(range(solutions)):
-		ax.plot(ERs, solutions[:,i], color=i)
-
-	ax.set_xlabel('Hệ số không khí cấp ER', fontsize=14)
-	ax.set_ylabel('y', fontsize=14)
-	ax.set_title('Quan sát sự thay đổi của nghiệm khi ER thay đổi', fontsize=20)
-	plt.xlim(0, np.max(ERs)+1)
-	plt.ylim(0, np.max(solution)+2)
-	plt.savefig('result.png')
-	plt.show()	
-
-
 def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 	"""
 	@parameters:
@@ -92,7 +80,7 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 	@return values:
 		- An array contains all root of equation system.
 		- A number of iterators for each value.
-	"""	
+	"""
 	n = 1
 	y = np.ones(6)
 	while ((LA.norm(y, ord=None) > epxilon or n == 1) and n <= N): # Use l2 norm
@@ -120,7 +108,7 @@ def main(args):
 	x = args.init_values
 	epxilon = float(args.epxilon)
 	N = int(args.N)
-	
+
 	np.set_printoptions(precision=4)
 
 	print(" -----------------------------------------------------------------------------------------------------------------")
@@ -135,7 +123,7 @@ def main(args):
 	print(f" | \tSố vòng lặp giới hạn N: {N}")
 	print(" |---------------------------------------------------------------------------------------------------------------|")
 	print(" -----------------------------------------------------------------------------------------------------------------")
-	
+
 	key = input(" | This information is true (Yes/No)?\n | Please enter your confirm ? ")
 	if key.upper() == "YES" or key.upper() == "Y":
         	# Solve the problem with default values
@@ -145,7 +133,7 @@ def main(args):
 		print(f" | \tThe final solution is: {solution}")
 		print(f" | \tThe number of iterators is {iterators}")
 		print(f" | \tThe error of algorithms is {error}")
-		displayExpectation(solution)		
+		displayExpectation(solution)
 		print(" ----------------------------------------------------------------------------------------------------------------")
 	elif key.upper() == "NO" or key.upper() == "N":
 		print("Please run again to solve problem and check your parameters")
@@ -153,15 +141,5 @@ def main(args):
 
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
-	parser.add_argument("-ER", help="Hệ số không khí cấp", default=0.2) # 0.25, 0.3, 0.35, 0.4
-	parser.add_argument("-T2", help="Nhiệu độ vừng khử", default=750)   # 750, 800, 850, 900
-	parser.add_argument(
-			"-init_values",
-			help="Nghiệm khởi tạo trước khi chạy thuật toán",
-			default=np.array(np.random.rand(6)))
-
-	parser.add_argument("-epxilon", help="The accuracy of method", default=1e-4)
-	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
-	args = parser.parse_args()
+	args = getArguments()
 	main(args)
