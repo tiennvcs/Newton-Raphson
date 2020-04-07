@@ -1,8 +1,5 @@
 import argparse
 import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import time
 from numpy import linalg as LA
 from functions import (f1, f2, f3, f4, f5, f6)
 from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
@@ -84,7 +81,7 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 	n = 1
 	positive_solution = np.random.rand(6)
 	y = np.ones(6)
-	while ((LA.norm(y, ord=None) > epxilon or n == 1)): # Use l2 norm
+	while ((LA.norm(y, ord=None) > epxilon or n == 1) and n <= N): # Use l2 norm
 		# Calculate the F(x)
 		Fx = F(x=x)
 		# Calculate the Jacobian matrix
@@ -93,10 +90,7 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 		y = solveLinearSystem(jacobi=jacobi, Fx=Fx)
 		# Update solution
 		x = x - y
-		if (x > 0).all():
-			positive_solution = x[:]
-		else:
-			for i in range(6):
+		for i in range(6):
 				if x[i] < 0:
 					x[i] = np.random.rand()
 		
