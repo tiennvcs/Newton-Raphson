@@ -94,7 +94,7 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 				if x[i] < 0:
 					x[i] = np.random.rand()
 		
-		display(positive_solution, y, n)
+		# display(positive_solution, y, n)
 		n = n + 1
 
 	return (positive_solution, n-1, LA.norm(y, ord=None))

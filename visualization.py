@@ -1,4 +1,5 @@
-from main import *
+from main import newton_raspson
+from matplotlib import pyplot as plt
 
 def plotGraph(solutions: np.ndarray, iterators: np.ndarray, errors: np.ndarray, ERs: list, T2: float):
 	"""
@@ -37,8 +38,10 @@ def main(args):
     solutions = np.array([[]])
     iterators = np.array([])
     errors = np.array([])
-    ERs = np.arange(0.2, 0.41, 0.01)
+    ERs = np.arange(0.2, 0.41, 0.05)
     for ER in ERs:
+	# Cập nhật các tham số
+	
         solution, iterator, error = newton_raspson(x=x, epxilon=epxilon, N=N)
         solutions = np.append(solutions, solution)
         iterators = np.append(iterators, iterator)
