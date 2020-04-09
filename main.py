@@ -46,7 +46,7 @@ def solveLinearSystem(jacobi: np.ndarray, Fx: np.ndarray):
 def display(x: np.ndarray, y: np.ndarray, n: int):
 	print(f"{n}th -- Solution: {x} -- The error: {LA.norm(y, ord=None)}")
 
-def displayExpectation(solution: np.ndarray):
+def getExpectation(solution: np.ndarray):
 	"""
 	n_t = n_1 + n_2 + n_3 + n_4 + n_5 + n_6
 	12n_1/23,52 = 20-40%
@@ -61,15 +61,17 @@ def displayExpectation(solution: np.ndarray):
 	percent3 = (solution[2] / sum_solution) * 100
 	percent4 = (solution[3] / sum_solution) * 100
 	percent6 = (solution[5] / sum_solution) * 100
-	print(f" |\tThe percentages of solution vector:")
-	print(f" | \t\t* 12n_1/23.52 = {round(percent1, 3)} %")
-	print(f" | \t\t* n_2/n_t     = {round(percent2, 3)} %")
-	print(f" | \t\t* n_3/n_t     = {round(percent3, 3)} %")
-	print(f" | \t\t* n_4/n_t     = {round(percent4, 3)} %")
-	print(f" | \t\t* n_6/n_t     = {round(percent6, 3)} %")
+	
+	return np.array([percent1, percent2, percent3, percent4, percent6])
+	# print(f" |\tThe percentages of solution vector:")
+	# print(f" | \t\t* 12n_1/23.52 = {round(percent1, 3)} %")
+	# print(f" | \t\t* n_2/n_t     = {round(percent2, 3)} %")
+	# print(f" | \t\t* n_3/n_t     = {round(percent3, 3)} %")
+	# print(f" | \t\t* n_4/n_t     = {round(percent4, 3)} %")
+	# print(f" | \t\t* n_6/n_t     = {round(percent6, 3)} %")
 
 
-def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
+def newton_raspson(x: np.ndarray, epxilon=1e-4, N=1000):
 	"""
 	@parameters:
 		- x (np.array): the initial solution vector when run Newton - Raspson method.
@@ -79,9 +81,8 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 		- A number of iterators for each value.
 	"""
 	n = 1
-	positive_solution = np.random.rand(6)
 	y = np.ones(6)
-	while ((LA.norm(y, ord=None) > epxilon or n == 1) and n <= N): # Use l2 norm
+	while (n < N): # Use l2 norm
 		# Calculate the F(x)
 		Fx = F(x=x)
 		# Calculate the Jacobian matrix
@@ -93,11 +94,12 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 		for i in range(6):
 				if x[i] < 0:
 					x[i] = np.random.rand()
-		
-		# display(positive_solution, y, n)
+
+		if LA.norm(y, ord=None) <= epxilon:
+			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 0}
 		n = n + 1
 
-	return (positive_solution, n-1, LA.norm(y, ord=None))
+	return {'x': x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
 
 
 def main(args):
@@ -106,37 +108,14 @@ def main(args):
 	x = args.init_values
 	epxilon = float(args.epxilon)
 	N = int(args.N)
-
-	np.set_printoptions(precision=4)
-
-	print(" -----------------------------------------------------------------------------------------------------------------")
-	print(" |---------------------------------------------------------------------------------------------------------------|")
-	print(" |                           Chương trình tìm nghiệm xấp xỉ bằng phương pháp Newton - Raspson                    |")
-	print(" -----------------------------------------------------------------------------------------------------------------")
-	print(" | Các giá trị đầu vào                                                                                           |")
-	print(f" | \tHệ số không khí cấp ER: {ER}")
-	print(f" | \tNhiệt độ vùng khử  T2: {T2}")
-	print(f" | \tVector nghiệm khởi tạo  [n_1, n_2, n_3, n_4, n_5, n_6]: {x}")
-	print(f" | \tĐộ chính xác cho trước epxilon: {epxilon}")
-	print(f" | \tSố vòng lặp giới hạn N: {N}")
-	print(" |---------------------------------------------------------------------------------------------------------------|")
-	print(" -----------------------------------------------------------------------------------------------------------------")
-
-	key = input(" | This information is true (Yes/No)?\n | Please enter your confirm ? ")
-	if key.upper() == "YES" or key.upper() == "Y":
-        	# Solve the problem with default values
-		print(" ----------------------------------------------------------------------------------------------------------------|")
-		print(" | The result archived from method showing bellow                                                                |")
-		solution, iterators, error  = newton_raspson(x=x, epxilon=epxilon, N=N)
-		print(f" | \tThe final solution is: {solution}")
-		print(f" | \tThe number of iterators is {iterators}")
-		print(f" | \tThe error of algorithms is {error}")
-		displayExpectation(solution)
-		print(" ----------------------------------------------------------------------------------------------------------------")
-	elif key.upper() == "NO" or key.upper() == "N":
-		print("Please run again to solve problem and check your parameters")
-		exit(1)
-
+	
+	result = newton_raspson(x=x, epxilon=epxilon, N=N)
+	print(
+            result['x'][0], result['x'][1], result['x'][2], result['x'][3], result['x'][4], result['x'][5], 
+            result['n'],
+            result['error'], 
+            result['success'])
+	
 
 if __name__ == "__main__":
 	args = getArguments()

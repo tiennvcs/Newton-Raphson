@@ -1,6 +1,5 @@
 # Definitions of all funtions of system equations.
 from parameters import *
-print(a, w, q)
 
 def f1(n1: float, n2: float, n3:float, n4:float, n5:float, n6:float):
     f = n1 + n3 + n4 + n6 - 1
