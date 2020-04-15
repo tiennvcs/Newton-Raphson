@@ -11,7 +11,7 @@ elif len(sys.argv) == 3:
 	T2 = 750 + 273.5
 elif len(sys.argv) >= 5:
 	ER, T2 = float(sys.argv[2]), float(sys.argv[4]) + 273.5
-	
+
 m = ER * (1 + a/4 - b/2)        # Calculate when have ER
 q = 4.76 * m / 45.5             # Calculate when have ER
 

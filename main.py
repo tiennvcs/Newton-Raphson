@@ -1,8 +1,8 @@
 import argparse
 import numpy as np
 from numpy import linalg as LA
-from functions import (f1, f2, f3, f4, f5, f6)
-from derivatives import (derivF_1, derivF_2, derivF_3, derivF_4, derivF_5, derivF_6)
+from functions import F
+from derivatives import Jacobian
 
 def getArguments():
 	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
@@ -17,27 +17,6 @@ def getArguments():
 	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
 	args = parser.parse_args()
 	return args
-
-def F(x: np.ndarray):
-	F = np.array([])
-	f1_x = f1(x[0], x[1], x[2], x[3], x[4], x[5])
-	f2_x = f2(x[0], x[1], x[2], x[3], x[4], x[5])
-	f3_x = f3(x[0], x[1], x[2], x[3], x[4], x[5])
-	f4_x = f4(x[0], x[1], x[2], x[3], x[4], x[5])
-	f5_x = f5(x[0], x[1], x[2], x[3], x[4], x[5])
-	f6_x = f6(x[0], x[1], x[2], x[3], x[4], x[5])
-
-	return np.array([f1_x, f2_x, f3_x, f4_x, f5_x, f6_x])
-
-def Jacobian(x: np.ndarray):
-	jacobian = np.array([
-			derivF_1(x[0], x[1], x[2], x[3], x[4], x[5]),
-			derivF_2(x[0], x[1], x[2], x[3], x[4], x[5]),
-			derivF_3(x[0], x[1], x[2], x[3], x[4], x[5]),
-			derivF_4(x[0], x[1], x[2], x[3], x[4], x[5]),
-			derivF_5(x[0], x[1], x[2], x[3], x[4], x[5]),
-			derivF_6(x[0], x[1], x[2], x[3], x[4], x[5])])
-	return jacobian
 
 def solveLinearSystem(jacobi: np.ndarray, Fx: np.ndarray):
 	y = LA.solve(jacobi, Fx)
@@ -93,8 +72,8 @@ def newton_raspson(x: np.ndarray, epxilon=10e-4, N=1000):
 		for i in range(6):
 				if x[i] < 0:
 					x[i] = np.random.rand()
-		
-		display(positive_solution, y, n)
+
+		# display(positive_solution, y, n)
 		n = n + 1
 
 	return (positive_solution, n-1, LA.norm(y, ord=None))

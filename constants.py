@@ -1,7 +1,7 @@
 # The constant values of problem.
 
 M_kk = 0.02304     # kg/m^3
-MC_kk = 0.75     
+MC_kk = 0.75
 a = 1.38
 b = 0.64
 w = 0.146

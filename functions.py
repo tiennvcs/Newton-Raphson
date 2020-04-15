@@ -1,34 +1,17 @@
 # Definitions of all funtions of system equations.
 from parameters import *
-print(a, w, q)
 
-def f1(n1: float, n2: float, n3:float, n4:float, n5:float, n6:float):
-    f = n1 + n3 + n4 + n6 - 1
-    return f
-
-def f2(n1:float, n2:float, n3: float, n4: float, n5: float, n6: float):
-    f = 2*n2 + 2*n5 + 4*n6 - a - 2*(w+q)
-    return f
-
-def f3(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
-    f = n3 + 2*n4 + n5 - (b + w + q + 2*m)
-    return f
-
-def f4(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
-    f = K1 * n2**2 - n6
-    return f
-
-def f5(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
-    f = K2 * n3*n5 - n2*n4
-    return f
-
-def f6(n1: float, n2: float, n3: float, n4: float, n5: float, n6: float):
-    f = dH_H2 * n2 + dH_CO * n3 + dH_CO2 * n4 + dH_H2O_k * n5 + dH_CH4 * n6 + 3.76*m*dH_N2 - dH_trau - w*dH_H2O_l
-    return f
+def F(x):
+    f1 = x[0] + x[2] + x[3] + x[5] - 1
+    f2 = 2*x[1] + 2*x[4] + 4*x[5] - a - 2*(w+q)
+    f3 = x[2] + 2*x[3] + x[4] - (b + w + q + 2*m)
+    f4 = K1 * x[1]**2 - x[5]
+    f5 = K2 * x[2]*x[4] - x[1]*x[3]
+    f6 = dH_H2 * x[1] + dH_CO * x[2] + dH_CO2 * x[3] + dH_H2O_k * x[4] + dH_CH4 * x[5] + 3.76*m*dH_N2 - dH_trau - w*dH_H2O_l
+    return np.array([f1, f2, f3, f4, f5, f6])
 
 def main(args):
     pass
-
 
 if __name__ == "__main__":
     main()
