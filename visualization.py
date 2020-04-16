@@ -46,6 +46,16 @@ def plotGraph(expectations: np.ndarray, iterators: np.ndarray, errors: np.ndarra
 		elif key.upper() == "NO" or key.upper() == "N":
 			exit(0)
 
+	while True:
+		key = input("Do you want to save the figure (Yes/No)? ")
+		if key.upper() == "YES" or key.upper() == 'Y':
+			now = datetime.now()
+			dt_string = now.strftime("%d-%m-%Y_%H-%M-%S")
+			fig.savefig('output/' + dt_string + '.jpeg')
+			exit(0)
+		elif key.upper() == "NO" or key.upper() == "N":
+			exit(0)
+
 
 def main(args):
 	T2 = args.T2
@@ -54,12 +64,11 @@ def main(args):
 	iterators = np.array([])
 	errors = np.array([])
 	for ER in ERs:
-		running = subprocess.run(['python3', 'main.py', '-ER', '0.3', '-T2', '900'], stdout=subprocess.PIPE)
-		output = running.stdout.decode('utf-8').split("\n")[0].split(" ")
+		running = subprocess.run(['python', 'main.py', '-ER', '0.3', '-T2', '900'], stdout=subprocess.PIPE)
+		output = running.stdout.decode('utf-8').split("\n")[1].split(" ")
 		solution = np.array(output[0:6], np.float32)
 		n = int(output[6])
 		error = float(output[7])
-
 		expectation = getExpectation(solution=solution)
 		expectations = np.append(expectations, expectation)
 		iterators = np.append(iterators, n)
