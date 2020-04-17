@@ -12,7 +12,6 @@ def F(x: np.array):
     f6 = dH_H2 * x[1] + dH_CO * x[2] + dH_CO2 * x[3] + dH_H2O_k * x[4] + dH_CH4 * x[5] + 3.76*m*dH_N2 - dH_trau - w*dH_H2O_l
     return np.array([f1, f2, f3, f4, f5, f6])
 
-
 def Jacobian(x):
     df1 =  np.array([1, 0, 1, 1, 0, 1])
     df2 = np.array([0, 2, 0, 0, 2, 4])
@@ -56,20 +55,21 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 		# Calculate the Jacobian matrix
 		jacobi = Jacobian(x=x)
 		# Solve the n x n linear system J(x)y = F(x)
-		y = LA.solve(jacobi=jacobi, Fx=Fx)
+		y = LA.solve(jacobi, Fx)
 		# Update solution
 		x = x - y
+
+		if LA.norm(y, ord=np.inf) <= epsilon:
+			return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
 
 		# Customize for the problem
 		for i in range(6):
 				if x[i] < 0:
 					x[i] = np.random.rand()
-
-		if LA.norm(y, ord=None) <= epsilon:
-			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
+			
 		n = n + 1
 
-	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=None), 'success': 0}
+	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 0}
 
 def main(args):
 	ER = float(args.ER)
