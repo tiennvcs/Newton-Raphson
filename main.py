@@ -22,7 +22,6 @@ def Jacobian(x):
     df6 = np.array([0, dH_H2, dH_CO, dH_CO2, dH_H2O_k, dH_CH4])
     return np.array([df1, df2, df3, df4, df5, df6])
 
-
 def getArguments():
 	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
 	parser.add_argument("-ER", help="Hệ số không khí cấp", default=0.2) # 0.25, 0.3, 0.35, 0.4
@@ -36,10 +35,6 @@ def getArguments():
 	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
 	args = parser.parse_args()
 	return args
-
-def solveLinearSystem(jacobi: np.ndarray, Fx: np.ndarray):
-	y = LA.solve(jacobi, Fx)
-	return y
 
 def display(x: np.ndarray, y: np.ndarray, n: int):
 	print(f"{n}th -- Solution: {x} -- The error: {LA.norm(y, ord=None)}")
@@ -61,7 +56,7 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 		# Calculate the Jacobian matrix
 		jacobi = Jacobian(x=x)
 		# Solve the n x n linear system J(x)y = F(x)
-		y = solveLinearSystem(jacobi=jacobi, Fx=Fx)
+		y = LA.solve(jacobi=jacobi, Fx=Fx)
 		# Update solution
 		x = x - y
 
@@ -75,7 +70,6 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 		n = n + 1
 
 	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=None), 'success': 0}
-
 
 def main(args):
 	ER = float(args.ER)
