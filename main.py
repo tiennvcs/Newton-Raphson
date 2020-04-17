@@ -74,7 +74,7 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
 		n = n + 1
 
-	return {'x': x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 0}
+	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=None), 'success': 0}
 
 
 def main(args):
@@ -83,14 +83,10 @@ def main(args):
 	x = args.init_values
 	epsilon = float(args.epsilon)
 	N = int(args.N)
-
+	
+	np.set_printoptions(precision=4, linewidth=10)
 	result = newton_raspson(x=x, epsilon=epsilon, N=N)
-	print(
-            result['x'][0], result['x'][1], result['x'][2], result['x'][3], result['x'][4], result['x'][5],
-            result['n'],
-            result['error'],
-            result['success'])
-
+	print(result)
 
 if __name__ == "__main__":
 	args = getArguments()
