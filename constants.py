@@ -6,7 +6,7 @@ a = 1.38
 b = 0.64
 w = 0.146
 
-dH_trau = 365736  # kJ/kmol
+dH_trau = 367291  # kJ/kmol
 dH_H2O = -214890  # kJ/kmol
 dH_H2O_l = -214890 # kJ/kmol
 dH_H2O_k = -214890 # kJ/kmol

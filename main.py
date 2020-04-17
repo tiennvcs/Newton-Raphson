@@ -1,7 +1,10 @@
 import argparse
+import random
 import numpy as np
 from numpy import linalg as LA
+import matplotlib.pyplot as plt
 from parameters import *
+
 
 def F(x: np.array):
     f1 = x[0] + x[2] + x[3] + x[5] - 1
@@ -37,12 +40,8 @@ def getArguments():
 	args = parser.parse_args()
 	return args
 
-def solveLinearSystem(jacobi: np.ndarray, Fx: np.ndarray):
-	y = LA.solve(jacobi, Fx)
-	return y
-
 def display(x: np.ndarray, y: np.ndarray, n: int):
-	print(f"{n}th -- Solution: {x} -- The error: {LA.norm(y, ord=None)}")
+	print(f"{n}th -- Solution: {x.tolist()} -- The error: {LA.norm(y, ord=None)}")
 
 def getExpectation(solution: np.ndarray):
 	sum_solution = np.sum(solution)
@@ -53,7 +52,24 @@ def getExpectation(solution: np.ndarray):
 	percent6 = (solution[5] / sum_solution) * 100
 	return np.array([percent1, percent2, percent3, percent4, percent6])
 
+def random_expectation(x: np.ndarray):
+	nt = np.sum(x)
+	if x[0] < 0:
+		x[0] = random.uniform(0.393666, 0.787333)
+	if x[1] < 0:
+		x[1] = random.uniform(0.05*nt, 0.06*nt)
+	if x[2] < 0:
+		x[2] = random.uniform(0.17*nt, 0.2*nt)
+	if x[3] < 0:
+		x[3] = random.uniform(0.01*nt, 0.03*nt)
+	if x[4] < 0:
+		x[4] = abs(x[4])
+	if x[5] < 0:
+		x[5] = random.uniform(0.04*np.sum(x), 0.08*np.sum(x))
+	return x
+
 def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
+	errors = []
 	n = 1
 	while (n < N): 
 		# Calculate the F(x)
@@ -61,7 +77,9 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 		# Calculate the Jacobian matrix
 		jacobi = Jacobian(x=x)
 		# Solve the n x n linear system J(x)y = F(x)
-		y = solveLinearSystem(jacobi=jacobi, Fx=Fx)
+		y = LA.solve(jacobi, Fx)
+		errors.append(LA.norm(y, ord=np.inf))
+		
 		# Update solution
 		x = x - y
 
@@ -70,11 +88,21 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 				if x[i] < 0:
 					x[i] = np.random.rand()
 
-		if LA.norm(y, ord=None) <= epsilon:
-			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
+		#x = random_expectation(x=x)
+		
+		if LA.norm(y, ord=np.inf) <= epsilon:
+			return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
+
+
 		n = n + 1
 
-	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=None), 'success': 0}
+	fig, ax = plt.subplots(figsize=(9,6))
+	ax.plot(range(1, n), errors)
+	ax.set_xlabel("Lần lặp")
+	ax.set_ylabel("Sai số")
+
+	plt.show()
+	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 0}
 
 
 def main(args):
@@ -84,9 +112,11 @@ def main(args):
 	epsilon = float(args.epsilon)
 	N = int(args.N)
 	
-	np.set_printoptions(precision=4, linewidth=10)
+	np.set_printoptions(precision=2, linewidth=10)
 	result = newton_raspson(x=x, epsilon=epsilon, N=N)
 	print(result)
+	print(getExpectation(solution=result['x']))
+
 
 if __name__ == "__main__":
 	args = getArguments()
