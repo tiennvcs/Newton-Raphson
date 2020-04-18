@@ -1,5 +1,6 @@
 import argparse
 import subprocess
+from ast import literal_eval
 import numpy as np
 from main import newton_raspson
 from matplotlib import pyplot as plt
@@ -64,11 +65,11 @@ def main(args):
 	iterators = np.array([])
 	errors = np.array([])
 	for ER in ERs:
-		running = subprocess.run(['python', 'main.py', '-ER', '0.3', '-T2', '900'], stdout=subprocess.PIPE)
-		output = running.stdout.decode('utf-8').split("\n")[1].split(" ")
-		solution = np.array(output[0:6], np.float32)
-		n = int(output[6])
-		error = float(output[7])
+		running = subprocess.run(['python', 'main.py', '-ER', '0.2', '-T2', '750'], stdout=subprocess.PIPE)
+		output = literal_eval(running.stdout.decode("utf-8").split("\n")[1])
+		solution = output['x']
+		n = int(output['n'])
+		error = float(output['error'])
 		expectation = getExpectation(solution=solution)
 		expectations = np.append(expectations, expectation)
 		iterators = np.append(iterators, n)
