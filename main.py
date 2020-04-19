@@ -1,4 +1,5 @@
 import argparse
+import random
 import numpy as np
 from numpy import linalg as LA
 from parameters import *
@@ -28,7 +29,7 @@ def getArguments():
 	parser.add_argument(
 			"-init_values",
 			help="Nghiệm khởi tạo trước khi chạy thuật toán",
-			default=np.array(np.random.rand(6)))
+			default=np.array([random.uniform(1e6, 1e10)]*6))
 
 	parser.add_argument("-epsilon", help="The accuracy of method", default=1e-4)
 	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
@@ -49,7 +50,7 @@ def getExpectation(solution: np.ndarray):
 
 def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 	n = 1
-	while (n < N): 
+	while (n < N):
 		# Calculate the F(x)
 		Fx = F(x=x)
 		# Calculate the Jacobian matrix
@@ -66,7 +67,9 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 		for i in range(6):
 				if x[i] < 0:
 					x[i] = np.random.rand()
-			
+
+		if LA.norm(y, ord=None) <= epsilon:
+			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
 		n = n + 1
 
 	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 0}
@@ -77,8 +80,7 @@ def main(args):
 	x = args.init_values
 	epsilon = float(args.epsilon)
 	N = int(args.N)
-	
-	np.set_printoptions(precision=4, linewidth=10)
+    np.set_printoptions(precision=4, linewidth=10)
 	result = newton_raspson(x=x, epsilon=epsilon, N=N)
 	print(result)
 
