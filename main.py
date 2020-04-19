@@ -80,7 +80,7 @@ def main(args):
 	x = args.init_values
 	epsilon = float(args.epsilon)
 	N = int(args.N)
-    np.set_printoptions(precision=4, linewidth=10)
+	np.set_printoptions(precision=4, linewidth=10)
 	result = newton_raspson(x=x, epsilon=epsilon, N=N)
 	print(result)
 
