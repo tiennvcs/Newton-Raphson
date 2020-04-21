@@ -13,7 +13,6 @@ def F(x: np.array):
     f6 = dH_H2 * x[1] + dH_CO * x[2] + dH_CO2 * x[3] + dH_H2O_k * x[4] + dH_CH4 * x[5] + 3.76*m*dH_N2 - dH_trau - w*dH_H2O_l
     return np.array([f1, f2, f3, f4, f5, f6])
 
-
 def Jacobian(x):
     df1 =  np.array([1, 0, 1, 1, 0, 1])
     df2 = np.array([0, 2, 0, 0, 2, 4])
@@ -22,7 +21,6 @@ def Jacobian(x):
     df5 = np.array([0, -x[3], K2*x[4], -x[1], K2*x[2], 0])
     df6 = np.array([0, dH_H2, dH_CO, dH_CO2, dH_H2O_k, dH_CH4])
     return np.array([df1, df2, df3, df4, df5, df6])
-
 
 def getArguments():
 	parser = argparse.ArgumentParser(description="Solve equation system using Newton-Raphson")
@@ -37,10 +35,6 @@ def getArguments():
 	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
 	args = parser.parse_args()
 	return args
-
-def solveLinearSystem(jacobi: np.ndarray, Fx: np.ndarray):
-	y = LA.solve(jacobi, Fx)
-	return y
 
 def display(x: np.ndarray, y: np.ndarray, n: int):
 	print(f"{n}th -- Solution: {x} -- The error: {LA.norm(y, ord=None)}")
@@ -62,9 +56,12 @@ def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 		# Calculate the Jacobian matrix
 		jacobi = Jacobian(x=x)
 		# Solve the n x n linear system J(x)y = F(x)
-		y = solveLinearSystem(jacobi=jacobi, Fx=Fx)
+		y = LA.solve(jacobi, Fx)
 		# Update solution
 		x = x - y
+
+		if LA.norm(y, ord=np.inf) <= epsilon:
+			return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
 
 		# Customize for the problem
 		for i in range(6):
@@ -75,8 +72,7 @@ def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
 		n = n + 1
 
-	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=None), 'success': 0}
-
+	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 0}
 
 def main(args):
 	ER = float(args.ER)
@@ -84,10 +80,9 @@ def main(args):
 	x = args.init_values
 	epsilon = float(args.epsilon)
 	N = int(args.N)
-	print("Initial value: ", x)
+	np.set_printoptions(precision=4, linewidth=10)
 	result = newton_raphson(x=x, epsilon=epsilon, N=N)
 	print(result)
-	print(getExpectation(solution=result['x']))
 
 if __name__ == "__main__":
 	args = getArguments()
