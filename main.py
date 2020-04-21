@@ -25,7 +25,7 @@ def Jacobian(x):
 
 
 def getArguments():
-	parser = argparse.ArgumentParser(description="Solve equation system using Newton - Raspson")
+	parser = argparse.ArgumentParser(description="Solve equation system using Newton-Raphson")
 	parser.add_argument("-ER", help="Hệ số không khí cấp", default=0.2) # 0.25, 0.3, 0.35, 0.4
 	parser.add_argument("-T2", help="Nhiệu độ vừng khử", default=750)   # 750, 800, 850, 900
 	parser.add_argument(
@@ -54,7 +54,7 @@ def getExpectation(solution: np.ndarray):
 	percent6 = (solution[5] / sum_solution) * 100
 	return np.array([percent1, percent2, percent3, percent4, percent6])
 
-def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
+def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 	n = 1
 	while (n < N):
 		# Calculate the F(x)
@@ -67,9 +67,9 @@ def newton_raspson(x: np.ndarray, epsilon=1e-6, N=1000):
 		x = x - y
 
 		# Customize for the problem
-		#for i in range(6):
-		#		if x[i] < 0:
-		#			x[i] = np.random.rand()
+		for i in range(6):
+				if x[i] < 0:
+					x[i] = np.random.rand()
 
 		if LA.norm(y, ord=None) <= epsilon:
 			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
@@ -84,9 +84,10 @@ def main(args):
 	x = args.init_values
 	epsilon = float(args.epsilon)
 	N = int(args.N)
-    np.set_printoptions(precision=4, linewidth=10)
-	result = newton_raspson(x=x, epsilon=epsilon, N=N)
+	print("Initial value: ", x)
+	result = newton_raphson(x=x, epsilon=epsilon, N=N)
 	print(result)
+	print(getExpectation(solution=result['x']))
 
 if __name__ == "__main__":
 	args = getArguments()

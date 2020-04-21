@@ -2,7 +2,6 @@ import argparse
 import subprocess
 from ast import literal_eval
 import numpy as np
-from main import newton_raspson
 from matplotlib import pyplot as plt
 from main import getExpectation
 from datetime import datetime

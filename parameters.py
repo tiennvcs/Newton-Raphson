@@ -3,7 +3,6 @@ import numpy as np
 import sys
 from constants import *
 
-
 if len(sys.argv) == 1:
 	ER, T2 = 0.2, 750 + 273.15
 elif len(sys.argv) == 3:
