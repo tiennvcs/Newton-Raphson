@@ -34,7 +34,6 @@ def display(x: np.ndarray, y: np.ndarray, n: int):
 	print(f"{n}th -- Solution: {x} -- The error: {LA.norm(y, ord=None)}")
 
 def getResult(x):
-	print(x)
 	n2 = (A-2*x[1]-4*x[2])/2
 	n3 = (B-2*x[0]-x[1])
 	n1 = 1-n3-x[0]-x[2]
@@ -68,9 +67,9 @@ def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 			return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
 
 		# Customize for the problem
-		for i in range(3):
-				if x[i] < 0:
-					x[i] = np.random.rand()
+		#for i in range(3):
+		#		if x[i] < 0:
+		#			x[i] = np.random.rand()
 
 		if LA.norm(y, ord=None) <= epsilon:
 			return {'x':x.tolist(), 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}
