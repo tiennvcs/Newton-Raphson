@@ -5,22 +5,16 @@ from numpy import linalg as LA
 from parameters import *
 
 def F(x: np.array):
-    f1 = x[0] + x[2] + x[3] + x[5] - 1
-    f2 = 2*x[1] + 2*x[4] + 4*x[5] - a - 2*(w+q)
-    f3 = x[2] + 2*x[3] + x[4] - (b + w + q + 2*m)
-    f4 = K1 * x[1]**2 - x[5]
-    f5 = K2 * x[2]*x[4] - x[1]*x[3]
-    f6 = dH_H2 * x[1] + dH_CO * x[2] + dH_CO2 * x[3] + dH_H2O_k * x[4] + dH_CH4 * x[5] + 3.76*m*dH_N2 - dH_trau - w*dH_H2O_l
-    return np.array([f1, f2, f3, f4, f5, f6])
+    f1 = 4*x[1]**2 + 16*K1*x[2]**2 + 16*x[1]*x[2] - 4*A*x[1] - (8*A+4/K1)*x[2] + A**2
+    f2 = (A+4*K2)*x[0] - 2*x[0]*x[1] - 4*x[0]*x[2] + 2*K2*x[1] - 2*K2*B
+	f3 = (2*dH_CO-dH_CO2)*x[0] + (dH_H2+dH_CO-dH_H2O_k)*x[1] + (dH_H2-dH_CH4)*x[2] + C
+	return np.array([f1, f2, f3])
 
 def Jacobian(x):
-    df1 =  np.array([1, 0, 1, 1, 0, 1])
-    df2 = np.array([0, 2, 0, 0, 2, 4])
-    df3 = np.array([0, 0, 1, 2, 1, 0])
-    df4 = np.array([0, 2*K1*x[1], 0, 0, 0, -1])
-    df5 = np.array([0, -x[3], K2*x[4], -x[1], K2*x[2], 0])
-    df6 = np.array([0, dH_H2, dH_CO, dH_CO2, dH_H2O_k, dH_CH4])
-    return np.array([df1, df2, df3, df4, df5, df6])
+    df1 =  np.array([0, 8*x[1]+16*x[2]-4*A, 32*K1*x[2]+16*x[1]-(8*A+4/K1)])
+    df2 = np.array([A+4*K2-2*x[1]-4*x[2], -2*x[0]+2*K2, -4*x[0]])
+    df3 = np.array([2*dH_CO-dH_CO2, dH_H2+dH_CO-dH_H2O_k, dH_H2-dH_CH4])
+    return np.array([df1, df2, df3])
 
 def getArguments():
 	parser = argparse.ArgumentParser(description="Solve equation system using Newton-Raphson")
@@ -29,7 +23,7 @@ def getArguments():
 	parser.add_argument(
 			"-init_values",
 			help="Nghiệm khởi tạo trước khi chạy thuật toán",
-			default=np.array([random.uniform(1e6, 1e10)]*6))
+			default=np.array([random.uniform(1e6, 1e10)]*3))
 
 	parser.add_argument("-epsilon", help="The accuracy of method", default=1e-4)
 	parser.add_argument("-N", help="Số lượng vòng lặp giới hạn", default=1000)
@@ -64,9 +58,9 @@ def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 			return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
 
 		# Customize for the problem
-		for i in range(6):
-				if x[i] < 0:
-					x[i] = np.random.rand()
+		#for i in range(6):
+		#		if x[i] < 0:
+		#			x[i] = np.random.rand()
 
 		if LA.norm(y, ord=None) <= epsilon:
 			return {'x':x, 'n': n, 'error': LA.norm(y, ord=None), 'success': 1}

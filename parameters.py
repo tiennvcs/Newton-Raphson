@@ -42,3 +42,7 @@ dH_CO = Hf_CO + dentaH_CO       # Calculate by (14) fomular.
 dH_CO2 = Hf_CO2 + dentaH_CO2    # Calculate by (14) fomular.
 dH_N2 = Hf_N2 + dentaH_N2       # Calculate by (14) fomular.
 dH_CH4 = Hf_CH4 + dentaH_CH4    # Calculate by (14) fomular.
+
+A = a + 2*(w+q)
+B = (b+w+q+2*m)
+C = dH_trau + w*dH_H2O_l - A*dH_H2/2 - B*dH_CO - 3.76*m*dH_N2
