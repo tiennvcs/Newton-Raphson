@@ -66,6 +66,8 @@ def main(args):
 	for ER in ERs:
 		running = subprocess.run(['python', 'main.py', '-ER', '0.2', '-T2', '750'], stdout=subprocess.PIPE)
 		output = literal_eval(running.stdout.decode("utf-8").split("\n")[1])
+		# print(output)
+		# input()
 		solution = output['x']
 		n = int(output['n'])
 		error = float(output['error'])

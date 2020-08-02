@@ -3,6 +3,8 @@ import numpy as np
 import sys
 from constants import *
 
+ER, T2 = 0.2, 750 + 273.15
+
 if len(sys.argv) == 1:
 	ER, T2 = 0.2, 750 + 273.15
 elif len(sys.argv) == 3:
@@ -17,9 +19,13 @@ q = 4.76 * m / 45.5             # Calculate when have ER
 
 exponent1 = 7082.848/T2 + (-6.567)*np.log(T2) + 7.466 * 1e-3 / 2 * T2 + (-2.164*1e-6) / 6 * T2 * T2 + 0.701 * 1e-5 / 2 / T2 / T2 + 32.541
 K1 = np.e ** exponent1                # Calculate by (23) fomular
+print("K1: ", K1)
+input()
 
 exponent2 = 5870.53/T2 + 1.86*np.log(T2) + 2.7 * 1e-4 * T2 + 58200/T2/T2 + 18.007
 K2 = np.e ** exponent2                # Calculate by (24) fomular
+print("K2: ", K2)
+input()
 
 dentaT = T2 - T1
 
