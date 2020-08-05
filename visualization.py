@@ -41,7 +41,7 @@ def plotGraph(expectations: np.ndarray, iterators: np.ndarray, errors: np.ndarra
 		if key.upper() == "YES" or key.upper() == 'Y':
 			now = datetime.now()
 			dt_string = now.strftime("%d-%m-%Y_%H-%M-%S")
-			fig.savefig('output/' + dt_string + '.jpeg')
+			fig.savefig('figures/' + dt_string + '.jpeg')
 			exit(0)
 		elif key.upper() == "NO" or key.upper() == "N":
 			exit(0)
