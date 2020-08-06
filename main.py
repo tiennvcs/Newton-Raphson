@@ -44,13 +44,14 @@ def display(x: np.ndarray, y: np.ndarray, n: int):
 
 
 def getExpectation(solution: np.ndarray):
-	sum_solution = np.sum(solution)
-	percent1 = (12*solution[0]/23.52)*100
-	percent2 = (solution[1] / sum_solution ) * 100
-	percent3 = (solution[2] / sum_solution) * 100
-	percent4 = (solution[3] / sum_solution) * 100
-	percent6 = (solution[5] / sum_solution) * 100
-	return np.array([percent1, percent2, percent3, percent4, percent6])
+    sum_solution = np.sum(solution)
+    percent1 = (12*solution[0]/23.52)*100
+    percent2 = (solution[1] / sum_solution ) * 100
+    percent3 = (solution[2] / sum_solution) * 100
+    percent4 = (solution[3] / sum_solution) * 100
+    percent5 = (solution[4] / sum_solution) * 100
+    percent6 = (solution[5] / sum_solution) * 100
+    return np.array([percent1, percent2, percent3, percent4, percent5, percent6])
 
 
 def check_constraints(x: np.ndarray):
