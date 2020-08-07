@@ -46,7 +46,7 @@ def display(x: np.ndarray, y: np.ndarray, n: int):
 def getExpectation(solution: np.ndarray):
     sum_solution = np.sum(solution)
     percent1 = (12*solution[0]/23.52)*100
-    percent2 = (solution[1] / sum_solution ) * 100
+    percent2 = (solution[1] / sum_solution) * 100
     percent3 = (solution[2] / sum_solution) * 100
     percent4 = (solution[3] / sum_solution) * 100
     percent5 = (solution[4] / sum_solution) * 100
@@ -128,6 +128,7 @@ def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 		n = n + 1
 
 	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 0}
+
 
 def main(args):
     np.random.seed(42)

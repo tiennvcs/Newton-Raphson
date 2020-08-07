@@ -32,8 +32,15 @@ def get_values_n1(path, T2):
     for key in percent_n1_values:
         percent_n1_values[key] = np.array(percent_n1_values[key])
 
+    #index_1_max = np.argmax(percent_n1_values[0.2])
+    #index_1_min = np.argmin(percent_n1_values[0.2])
+    #alpha = 0.4
+    #value_center = (1-alpha)*percent_n1_values[0.2][index_1_min] + alpha*percent_n1_values[0.2][index_1_max]
+    #percent_n1_values[0.2] -= 9
     index_1 = np.argmax(percent_n1_values[0.2])
+
     index_5 = np.argmin(percent_n1_values[0.4])
+
     middle = (percent_n1_values[0.2][index_1] + percent_n1_values[0.4][index_5])/2
 
     # Find the element closest with middle value
@@ -48,11 +55,18 @@ def get_values_n1(path, T2):
         if value - middle < middle - percent_n1_values[0.25][index_2]:
             index_2 = i
 
-    middle = (percent_n1_values[0.3][index_1] + percent_n1_values[0.4][index_3])/2
+    middle = (percent_n1_values[0.3][index_3] + percent_n1_values[0.4][index_5])/2
     index_4 = 0
     for i, value in enumerate(percent_n1_values[0.35]):
         if value - middle < middle - percent_n1_values[0.35][index_2]:
             index_4 = i
+
+    print("% C:    {}".format(np.array(
+                    [percent_n1_values[0.2][index_1],
+                     percent_n1_values[0.25][index_2],
+                     percent_n1_values[0.3][index_3],
+                     percent_n1_values[0.35][index_4],
+                     percent_n1_values[0.4][index_5]])))
 
     return (np.array([percent_n1_values[0.2][index_1],
                      percent_n1_values[0.25][index_2],
@@ -60,10 +74,10 @@ def get_values_n1(path, T2):
                      percent_n1_values[0.35][index_4],
                      percent_n1_values[0.4][index_5]]),
             np.array([n1_values[0.2][index_1],
-                             n1_values[0.25][index_2],
-                             n1_values[0.3][index_3],
-                             n1_values[0.35][index_4],
-                             n1_values[0.4][index_5]]))
+                     n1_values[0.25][index_2],
+                     n1_values[0.3][index_3],
+                     n1_values[0.35][index_4],
+                     n1_values[0.4][index_5]]))
 
 
 def get_values_n2(path, T2):
@@ -111,6 +125,12 @@ def get_values_n2(path, T2):
     for i, value in enumerate(percent_n2_values[0.35]):
         if value - middle < middle - percent_n2_values[0.35][index_4]:
             index_4 = i
+
+    print("% H2:   {}".format(np.array([percent_n2_values[0.2][index_1],
+                      percent_n2_values[0.25][index_2],
+                      percent_n2_values[0.3][index_3],
+                      percent_n2_values[0.35][index_4],
+                      percent_n2_values[0.4][index_5]])))
 
     return (np.array([percent_n2_values[0.2][index_1],
                       percent_n2_values[0.25][index_2],
@@ -169,6 +189,12 @@ def get_values_n3(path, T2):
     for i, value in enumerate(percent_n3_values[0.35]):
         if value - middle < middle - percent_n3_values[0.35][index_4]:
             index_4 = i
+
+    print("% CO:   {}".format([percent_n3_values[0.2][index_1],
+                      percent_n3_values[0.25][index_2],
+                      percent_n3_values[0.3][index_3],
+                      percent_n3_values[0.35][index_4],
+                      percent_n3_values[0.4][index_5]]))
 
     return (np.array([percent_n3_values[0.2][index_1],
                       percent_n3_values[0.25][index_2],
@@ -231,10 +257,16 @@ def get_values_n4(path, T2):
 
     middle = (percent_n4_values[0.3][index_1] + percent_n4_values[0.4][index_3])/2
     index_4 = 0
-    
+
     for i, value in enumerate(percent_n4_values[0.35]):
         if value - middle > middle - percent_n4_values[0.35][index_2]:
             index_4 = i
+
+    print("% CO2:  {}".format(np.array([percent_n4_values[0.2][index_1],
+                      percent_n4_values[0.25][index_2],
+                      percent_n4_values[0.3][index_3],
+                      percent_n4_values[0.35][index_4],
+                      percent_n4_values[0.4][index_5]])))
 
     return (np.array([percent_n4_values[0.2][index_1],
                       percent_n4_values[0.25][index_2],
@@ -294,6 +326,12 @@ def get_values_n6(path, T2):
     for i, value in enumerate(percent_n6_values[0.35]):
         if value - middle < middle - percent_n6_values[0.35][index_4]:
             index_4 = i
+
+    print("% CH4:  {}".format(np.array([percent_n6_values[0.2][index_1],
+                      percent_n6_values[0.25][index_2],
+                      percent_n6_values[0.3][index_3],
+                      percent_n6_values[0.35][index_4],
+                      percent_n6_values[0.4][index_5]])))
 
     return (np.array([percent_n6_values[0.2][index_1],
                       percent_n6_values[0.25][index_2],
