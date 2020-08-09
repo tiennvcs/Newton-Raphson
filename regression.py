@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
 from get_values import get_values_n1, get_values_n2, get_values_n3, get_values_n4, get_values_n6
@@ -33,6 +34,7 @@ def get_data(name: str, path: str):
     y = []
 
     for T2 in T2_values:
+
         percents, values = get_values(path, T2)
         i = 0
         for ER in ER_values:
@@ -52,10 +54,14 @@ def linear_regression(X, y):
 
 
 def polynorminal_regression(X, y):
-    pass
+    poly = PolynomialFeatures(2)
+    features = poly.fit_transform(X)
+    reg = LinearRegression()
+    reg.fit(features, y)
+    return reg.coef_.tolist(), reg.intercept_, reg.score(features, y)
 
 
-def visualize_linear(X, y, coef, intercept, label=None, linear=True):
+def visualize(X, y, coef, intercept, label=None, linear=True):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     y = np.reshape(y, (-1, 1))
@@ -63,10 +69,13 @@ def visualize_linear(X, y, coef, intercept, label=None, linear=True):
     # Plot a basic wireframe.
     ax.scatter(X[0], X[1], np.array(y))
 
-    X = np.linspace(0, 1000, 1000)
-    Y = np.linspace(0, 0.5, 1000)
+    X = np.linspace(700, 1000, 1000)
+    Y = np.linspace(0.19, 0.41, 1000)
     X, Y = np.meshgrid(X, Y)
-    Z = coef[0] * X + coef[1] * Y + intercept
+    if linear:
+        Z = coef[0] * X + coef[1] * Y + intercept
+    else:
+        Z = coef[0] * 1 + coef[1] * X + coef[2] * Y + coef[3] * X**2 + coef[4] * X * Y + coef[5] * Y**2 + intercept
 
     # # Plot the surface.
     surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
@@ -76,6 +85,8 @@ def visualize_linear(X, y, coef, intercept, label=None, linear=True):
     ax.set_zlim(-1+np.min(Z), np.max(Z)+1)
     ax.zaxis.set_major_locator(LinearLocator(10))
     ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+    ax.set_xlabel("T2")
+    ax.set_ylabel("ER")
 
     # Add a color bar which maps values to colors.
     fig.colorbar(surf, shrink=0.5, aspect=5)
@@ -93,11 +104,11 @@ def main(args):
     if name == 'n1' or name == 'n4':
         coef, intercept, score = linear_regression(X, y)
         print(coef, intercept, score)
-        visualize_linear(X.T, y, coef, intercept, label=name, linear=True)
+        visualize(X.T, y, coef, intercept, label=name, linear=True)
     else:
         coef, intercept, score = polynorminal_regression(X, y)
         print(coef, intercept, score)
-        visualize_polynomial(X.T, y, coef, intercept, label=name, linear=True)
+        visualize(X.T, y, coef, intercept, label=name, linear=False)
 
 
 if __name__ == '__main__':
