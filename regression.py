@@ -82,7 +82,7 @@ def visualize_linear(X, y, coef, intercept, label=None, linear=True):
 
     ax.set_title(r'The ${}$ representation and The approximate function'.format(label))
 
-    # ax.legend(label)
+    #ax.legend(label)
     plt.show()
 
 
