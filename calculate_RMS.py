@@ -40,11 +40,11 @@ def get_theory_values(path: str, T2: float):
 def caculate_RMS(experimental_data: dict, theory_data: dict):
     # print(experimental_data)
     # print(theory_data)
-    RMS_1 = np.sqrt(np.sum(np.square(theory_data[0.2][1:] - experimental_data[0.2][1:]) / len(theory_data[0.2][1:])))
-    RMS_2 = np.sqrt(np.sum(np.square(theory_data[0.25][1:] - experimental_data[0.25][1:]) / len(theory_data[0.25][1:])))
-    RMS_3 = np.sqrt(np.sum(np.square(theory_data[0.3][1:] - experimental_data[0.3][1:]) / len(theory_data[0.3][1:])))
-    RMS_4 = np.sqrt(np.sum(np.square(theory_data[0.35][1:] - experimental_data[0.35][1:]) / len(theory_data[0.35][1:])))
-    RMS_5 = np.sqrt(np.sum(np.square(theory_data[0.4][1:] - experimental_data[0.4][1:]) / len(theory_data[0.4][1:])))
+    RMS_1 = np.sqrt(np.sum(np.square(theory_data[0.2] - experimental_data[0.2]) / len(theory_data[0.2])))
+    RMS_2 = np.sqrt(np.sum(np.square(theory_data[0.25] - experimental_data[0.25]) / len(theory_data[0.25])))
+    RMS_3 = np.sqrt(np.sum(np.square(theory_data[0.3] - experimental_data[0.3]) / len(theory_data[0.3])))
+    RMS_4 = np.sqrt(np.sum(np.square(theory_data[0.35] - experimental_data[0.35]) / len(theory_data[0.35])))
+    RMS_5 = np.sqrt(np.sum(np.square(theory_data[0.4] - experimental_data[0.4]) / len(theory_data[0.4])))
 
     return np.array([RMS_1, RMS_2, RMS_3, RMS_4, RMS_5])
 
