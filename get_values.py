@@ -1,6 +1,17 @@
 import numpy as np
 import os
-from main import getExpectation
+
+
+def getExpectation(solution: np.ndarray):
+    sum_solution = np.sum(solution)
+    percent1 = (12*solution[0]/23.52)*100
+    percent2 = (solution[1] / sum_solution) * 100
+    percent3 = (solution[2] / sum_solution) * 100
+    percent4 = (solution[3] / sum_solution) * 100
+    percent5 = (solution[4] / sum_solution) * 100
+    percent6 = (solution[5] / sum_solution) * 100
+    return np.array([percent1, percent2, percent3, percent4, percent5, percent6])
+
 
 def get_values_n1(path, T2):
 
@@ -61,13 +72,6 @@ def get_values_n1(path, T2):
         if value - middle < middle - percent_n1_values[0.35][index_2]:
             index_4 = i
 
-    print("% C:    {}".format(np.array(
-                    [percent_n1_values[0.2][index_1],
-                     percent_n1_values[0.25][index_2],
-                     percent_n1_values[0.3][index_3],
-                     percent_n1_values[0.35][index_4],
-                     percent_n1_values[0.4][index_5]])))
-
     return (np.array([percent_n1_values[0.2][index_1],
                      percent_n1_values[0.25][index_2],
                      percent_n1_values[0.3][index_3],
@@ -126,12 +130,6 @@ def get_values_n2(path, T2):
         if value - middle < middle - percent_n2_values[0.35][index_4]:
             index_4 = i
 
-    print("% H2:   {}".format(np.array([percent_n2_values[0.2][index_1],
-                      percent_n2_values[0.25][index_2],
-                      percent_n2_values[0.3][index_3],
-                      percent_n2_values[0.35][index_4],
-                      percent_n2_values[0.4][index_5]])))
-
     return (np.array([percent_n2_values[0.2][index_1],
                       percent_n2_values[0.25][index_2],
                       percent_n2_values[0.3][index_3],
@@ -189,12 +187,6 @@ def get_values_n3(path, T2):
     for i, value in enumerate(percent_n3_values[0.35]):
         if value - middle < middle - percent_n3_values[0.35][index_4]:
             index_4 = i
-
-    print("% CO:   {}".format([percent_n3_values[0.2][index_1],
-                      percent_n3_values[0.25][index_2],
-                      percent_n3_values[0.3][index_3],
-                      percent_n3_values[0.35][index_4],
-                      percent_n3_values[0.4][index_5]]))
 
     return (np.array([percent_n3_values[0.2][index_1],
                       percent_n3_values[0.25][index_2],
@@ -262,12 +254,6 @@ def get_values_n4(path, T2):
         if value - middle > middle - percent_n4_values[0.35][index_2]:
             index_4 = i
 
-    print("% CO2:  {}".format(np.array([percent_n4_values[0.2][index_1],
-                      percent_n4_values[0.25][index_2],
-                      percent_n4_values[0.3][index_3],
-                      percent_n4_values[0.35][index_4],
-                      percent_n4_values[0.4][index_5]])))
-
     return (np.array([percent_n4_values[0.2][index_1],
                       percent_n4_values[0.25][index_2],
                       percent_n4_values[0.3][index_3],
@@ -326,12 +312,6 @@ def get_values_n6(path, T2):
     for i, value in enumerate(percent_n6_values[0.35]):
         if value - middle < middle - percent_n6_values[0.35][index_4]:
             index_4 = i
-
-    print("% CH4:  {}".format(np.array([percent_n6_values[0.2][index_1],
-                      percent_n6_values[0.25][index_2],
-                      percent_n6_values[0.3][index_3],
-                      percent_n6_values[0.35][index_4],
-                      percent_n6_values[0.4][index_5]])))
 
     return (np.array([percent_n6_values[0.2][index_1],
                       percent_n6_values[0.25][index_2],

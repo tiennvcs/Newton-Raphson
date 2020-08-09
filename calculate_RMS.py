@@ -38,8 +38,8 @@ def get_theory_values(path: str, T2: float):
     return ERs
 
 def caculate_RMS(experimental_data: dict, theory_data: dict):
-    print(experimental_data)
-    print(theory_data)
+    # print(experimental_data)
+    # print(theory_data)
     RMS_1 = np.sqrt(np.sum(np.square(theory_data[0.2][1:] - experimental_data[0.2][1:]) / len(theory_data[0.2][1:])))
     RMS_2 = np.sqrt(np.sum(np.square(theory_data[0.25][1:] - experimental_data[0.25][1:]) / len(theory_data[0.25][1:])))
     RMS_3 = np.sqrt(np.sum(np.square(theory_data[0.3][1:] - experimental_data[0.3][1:]) / len(theory_data[0.3][1:])))

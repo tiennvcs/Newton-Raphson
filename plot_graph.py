@@ -13,20 +13,29 @@ def get_argument():
 
 def plot_graphs(path: str, T2: float):
     (n1_percents, n1_values) = get_values_n1(path, T2)
+    print("% C:   {}".format(n1_percents))
+
     (n2_percents, n2_values) = get_values_n2(path, T2)
+    print("% H2:  {}".format(n2_percents))
+
     (n3_percents, n3_values) = get_values_n3(path, T2)
+    print("% CO:  {}".format(n3_percents))
+
     (n4_percents, n4_values) = get_values_n4(path, T2)
+    print("% CO2: {}".format(n4_percents))
+
     (n6_percents, n6_values) = get_values_n6(path, T2)
+    print("% CH4: {}".format(n6_percents))
 
     ER = np.array([0.2, 0.25, 0.3, 0.35, 0.4])
     fig, axes = plt.subplots(figsize=(7, 5))
     # print(matrix[:, 0])
     # expected_1 = getExpectation(solution=matrix[:, 0])
-    axes.plot(ER, n1_percents, 'r', label='% C', linewidth=1)
-    axes.plot(ER, n2_percents, 'g--', label=r'% $H_2$', linewidth=1)
-    axes.plot(ER, n3_percents, 'c', label='% CO', linewidth=1)
-    axes.plot(ER, n4_percents, 'b', label='% $CO_2$', linewidth=1)
-    axes.plot(ER, n6_percents, 'y', label='% $CH_4$', linewidth=1)
+    axes.plot(ER, n1_percents, 'c', label='C', linewidth=1)
+    axes.plot(ER, n2_percents, 'g--', label=r'$H_2$', linewidth=1)
+    axes.plot(ER, n3_percents, 'r', label='CO', linewidth=1)
+    axes.plot(ER, n4_percents, 'b--', label='$CO_2$', linewidth=1)
+    axes.plot(ER, n6_percents, 'y', label='$CH_4$', linewidth=1)
 
     axes.scatter(ER, n1_percents, marker='s', color='r')
     axes.text(ER[0], n1_percents[0], r'${}$'.format(round(n1_percents[0],2 )), fontsize=8)
@@ -67,7 +76,7 @@ def plot_graphs(path: str, T2: float):
     axes.set_xlabel("ER", fontsize=10)
     axes.set_ylabel("Syngas Compositions (%)", fontsize=10)
     axes.set_xticks(ER)
-    axes.set_title(str(T2) + r"$^{0} C$", fontsize=12)
+    axes.set_title(str(int(T2)) + r"$^{o} C$", fontsize=12)
     plt.grid(True, linestyle =':')
     plt.legend(loc='best')
     plt.show()
