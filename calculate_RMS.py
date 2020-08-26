@@ -1,7 +1,7 @@
 import os
 import argparse
 import numpy as np
-from get_values import get_values_n1, get_values_n2, get_values_n3, get_values_n4, get_values_n6
+from get_values import get_values
 
 
 def get_argument():
@@ -22,11 +22,8 @@ def get_experiental_values(path: str, T2: float):
     return ERs
 
 def get_theory_values(path: str, T2: float):
-    n1_percents, n1_values = get_values_n1(path, T2)
-    n2_percents, n2_values = get_values_n2(path, T2)
-    n3_percents, n3_values = get_values_n3(path, T2)
-    n4_percents, n4_values = get_values_n4(path, T2)
-    n6_percents, n6_values = get_values_n6(path, T2)
+
+    n1_percents, n2_percents, n3_percents, n4_percents, n6_percents = get_values(path=path, T2=T2)
 
     ERs = dict()
     ERs[0.2] = np.round([n1_percents[0], n2_percents[0], n3_percents[0], n4_percents[0], n6_percents[0]], 2)

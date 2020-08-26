@@ -4,9 +4,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
-from get_values import get_values_n1, get_values_n2, get_values_n3, get_values_n4, get_values_n6
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
+
+from get_values import get_values_n1, get_values_n2, get_values_n3, get_values_n4, get_values_n6
 
 
 n_i = {
@@ -26,21 +27,10 @@ def getArguments():
     return parser.parse_args()
 
 def get_data(name: str, path: str):
-    T2_values = [750, 800, 850, 900]
-    ER_values = [0.2, 0.25, 0.3, 0.35, 0.4]
+
     get_values = n_i[name]
 
-    X = []
-    y = []
-
-    for T2 in T2_values:
-
-        percents, values = get_values(path, T2)
-        i = 0
-        for ER in ER_values:
-            X.append(np.array([T2, ER]))
-            y.append(percents[i])
-            i += 1
+    X, y = get_values(path)
 
     X = np.array(X)
     y = np.array(y)
