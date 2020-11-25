@@ -1,6 +1,14 @@
 import numpy as np
 import os
 
+def calculate_LHV(x: np.array):
+    LHV_CH4 = 35.88
+    LHV_CO = 12.63
+    LHV_H2 = 10.78
+
+    LHV_gas = x[5]*LHV_CH4 + x[1]*LHV_H2 + x[2]*LHV_CO
+    return LHV_gas*238
+
 
 def getExpectation(solution: np.ndarray, rounded=2):
     sum_solution = np.sum(solution)
@@ -36,6 +44,7 @@ def get_values(path, T2):
     n4_expectation = []
     n5_expectation = []
     n6_expectation = []
+    LHVs = []
 
     for file in path_files:
 
@@ -77,8 +86,10 @@ def get_values(path, T2):
         n5_expectation.append(expectations[ER][4])
         n6_expectation.append(expectations[ER][5])
 
+        lhv = calculate_LHV(average_values[ER]/np.sum(average_values[ER]))
+        LHVs.append(lhv)
 
-    return (n1_expectation, n2_expectation, n3_expectation, n4_expectation, n6_expectation)
+    return (LHVs, n1_expectation, n2_expectation, n3_expectation, n4_expectation, n6_expectation)
 
 
 def get_values_n1(path):
