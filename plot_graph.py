@@ -67,7 +67,7 @@ def plot_graphs(path: str, T2: float):
     axes.set_ylim(0)
     
     ax2 = axes.twinx()  # instantiate a second axes that shares the same x-axis
-    ax2.set_ylabel(r'LHV (Kcal/N$m^3$)', color='tab:red')  # we already handled the x-label with ax1
+    ax2.set_ylabel(r'LHV (kcal/N$m^3$)', color='tab:red')  # we already handled the x-label with ax1
     ln6 = ax2.plot(ER, LHVs, 'x-', linewidth=2, label='LHV', color='tab:red')
     ax2.text(ER[0], LHVs[0]-55, r'${}$'.format(round(LHVs[0],2 )), fontsize=8)
     ax2.text(ER[1], LHVs[1]-55, r'${}$'.format(round(LHVs[1],2 )), fontsize=8)
