@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d import axes3d
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
-from get_values import get_values_n1, get_values_n2, get_values_n3, get_values_n4, get_values_n6
+from get_experimental_values import get_values_n1, get_values_n2, get_values_n3, get_values_n4, get_values_n6
 
 
 n_i = {
@@ -100,9 +100,7 @@ def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
 
     # Add a color bar which maps values to colors.
     fig.colorbar(surf, shrink=0.5, aspect=5)
-
-    #ax.set_title(r'The ${}$ representation and The approximate function'.format(label))
-
+    
     ax.legend()
     plt.show()
 
@@ -146,7 +144,7 @@ def visualize(X, y, coef, intercept, label=None, linear=True):
 def main(args):
     
     name = args.var
-    path = "output_solutions"
+    path = "experimental_data"
     
     if name == 'n1' or name == 'n4':
         X, y = get_data(name=name, path=path)

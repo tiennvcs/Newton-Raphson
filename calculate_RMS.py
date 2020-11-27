@@ -10,7 +10,7 @@ def get_argument():
     return parser.parse_args()
 
 
-def get_experiental_values(path: str, T2: float):
+def get_experimental_values(path: str, T2: float):
     ERs = {}
     for file in os.listdir(path):
         if str(T2).split(".")[0] in file:
@@ -23,7 +23,7 @@ def get_experiental_values(path: str, T2: float):
 
 def get_theory_values(path: str, T2: float):
 
-    n1_percents, n2_percents, n3_percents, n4_percents, n6_percents = get_values(path=path, T2=T2)
+    _, n1_percents, n2_percents, n3_percents, n4_percents, n6_percents = get_values(path=path, T2=T2)
 
     ERs = dict()
     ERs[0.2] = np.round([n1_percents[0], n2_percents[0], n3_percents[0], n4_percents[0], n6_percents[0]], 2)
@@ -49,7 +49,8 @@ def caculate_RMS(experimental_data: dict, theory_data: dict):
 def main(args):
     path_experiments = "experimental_data"
     path_theory = "output_solutions"
-    experimental_data = get_experiental_values(path_experiments, args.T2)
+    experimental_data = get_experimental_values(path_experiments, args.T2)
+    print(experimental_data)
     theory_data = get_theory_values(path=path_theory, T2=args.T2)
     RMSs = caculate_RMS(experimental_data=experimental_data, theory_data=theory_data)
     print(RMSs.T)
