@@ -15,43 +15,48 @@ def yOut(f1, f2, alpha):
 def optimize(ERs, T2s, f1, f2, alpha):
     
     X = []
-    Youts = []
     ER_T2s = []
 
-    print("\n"*2)
-    print("-"*39 + "CALCULATING C AND LHV VALUE" + "-"*39)
-    print("|{:^20}|{:^20}|{:^20}|{:^20}|{:^20}|".format('T2', 'ER', '%C', 'LHV', 'Y_balance'))
-    print("-"*105)
-    
     for T2 in T2s:
         for ER in ERs:
             yc = f1(ER=ER, T2=T2)
             ylhv = f2(ER=ER, T2=T2)
-            yout = yOut(yc, ylhv, alpha=alpha)
             
             ER_T2s.append([ER, T2])
-            X.append(np.round(np.array([yc, ylhv]), 2))
-            Youts.append(yout)
-
-            print("|{:^20}|{:^20}|{:^20}|{:^20}|{:^20}|".format(
-                       T2, ER, np.round(yc, 2), np.round(ylhv, 2), np.round(yout)))
-        print("-"*105)
-    print("-"*105)
+            X.append(np.array([yc, ylhv]))
 
     X = np.array(X)
-    Youts = np.array(Youts)
+    normalize_X = (X - np.min(X, axis=0))/(np.max(X, axis=0)-np.min(X, axis=0))
+    
+    Youts = []
+    for pair in normalize_X:
+        yout = yOut(f1=pair[0], f2=pair[1], alpha=alpha)
+        Youts.append(yout)
 
+    print("\n"*2)
+    print("-"*27 + "CALCULATING C AND LHV VALUE WITH ALPHA = {}".format(alpha) + "-"*27)
+    print("|{:^10}|{:^10}|{:^10}|{:^10}|{:^20}|{:^20}|{:^10}|".format(
+        'T2', 'ER', '%C', 'LHV', 'normalized %C', 'normalized LHV', 'Y_balance'))
+    print("-"*98)
+    
+    i = 0
+    for T2 in T2s:
+        for ER in ERs:
+            print("|{:^10}|{:^10}|{:^10}|{:^10}|{:^20}|{:^20}|{:^10}|".format(
+                       T2, ER, np.round(X[i][0], 2), np.round(X[i][1], 2), 
+                       np.round(normalize_X[i][0], 2), np.round(normalize_X[i][1], 2), np.round(Youts[i], 2)))
+            i += 1
+        print("-"*98)
+    print("-"*98)
+
+    Youts = np.array(Youts)
     best_index = np.argmax(Youts)
 
     print("---> The best coeficient (ER, T2) to maximize C and LHV (with alpha = {}) is {}".format(alpha, ER_T2s[best_index]))
     print("---> The value of C and LHV when ER = {} and T2 = {} (with alpha = {}) is {}".format(
         ER_T2s[best_index][0], ER_T2s[best_index][1], alpha, Youts[best_index]))
 
-    return X, Youts, best_index
-
-    return None
-            
-
+    return normalize_X, Youts, best_index
 
 
 def main(args):
