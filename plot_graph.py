@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from get_values import get_values
 
 
-
 def get_argument():
     parser = argparse.ArgumentParser(description="Solve equation system using Newton-Raphson")
     parser.add_argument("-T2", help="Nhiệu độ vừng khử", type=int, default=750.0)   # 750, 800, 850, 900

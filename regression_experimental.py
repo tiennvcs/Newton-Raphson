@@ -85,7 +85,8 @@ def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
     # # Plot the surface.
     surf = ax.plot_surface(X, Y, Z_LHV/(np.max(Z_LHV)+1), cmap=cm.coolwarm, label='LHV',
                            linewidth=0, antialiased=False)
-    # # Plot the surface.
+    # surf._facecolors2d=surf._facecolors3d
+    # surf._edgecolors2d=surf._edgecolors3d
     surf = ax.plot_surface(X, Y, Z_C/(np.max(Z_C)+1), cmap=cm.coolwarm, label='C',
                            linewidth=0, antialiased=False)
 
@@ -95,13 +96,11 @@ def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
     ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
     ax.set_xlabel("T2")
     ax.set_ylabel("ER")
-    surf._facecolors2d=surf._facecolors3d
-    surf._edgecolors2d=surf._edgecolors3d
 
     # Add a color bar which maps values to colors.
     fig.colorbar(surf, shrink=0.5, aspect=5)
     
-    ax.legend()
+    #ax.legend()
     plt.show()
 
 

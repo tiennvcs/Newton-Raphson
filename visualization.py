@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from main import getExpectation
 from datetime import datetime
 
+
 def plotGraph(expectations: np.ndarray, iterators: np.ndarray, errors: np.ndarray, ERs: list, T2: float):
 	"""
 	@parameters:
