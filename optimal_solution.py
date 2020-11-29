@@ -19,6 +19,7 @@ def optimize(ERs, T2s, f1, f2, alpha):
 
     for T2 in T2s:
         for ER in ERs:
+            
             yc = f1(ER=ER, T2=T2)
             ylhv = f2(ER=ER, T2=T2)
             
@@ -26,8 +27,14 @@ def optimize(ERs, T2s, f1, f2, alpha):
             X.append(np.array([yc, ylhv]))
 
     X = np.array(X)
-    normalize_X = (X - np.min(X, axis=0))/(np.max(X, axis=0)-np.min(X, axis=0))
-    
+    #print(X)
+    normalize_X = (X - np.min(X, axis=0)+1)/(np.max(X, axis=0)-np.min(X, axis=0))
+    # print("min yC:", np.min(X, axis=0)[0])
+    # print("max yC:", np.max(X, axis=0)[0])
+    # print("min yLHV:", np.min(X, axis=0)[1])
+    # print("max yLHV:", np.max(X, axis=0)[1])
+    # print(normalize_X)
+
     Youts = []
     for pair in normalize_X:
         yout = yOut(f1=pair[0], f2=pair[1], alpha=alpha)
@@ -43,8 +50,9 @@ def optimize(ERs, T2s, f1, f2, alpha):
     for T2 in T2s:
         for ER in ERs:
             print("|{:^10}|{:^10}|{:^10}|{:^10}|{:^20}|{:^20}|{:^10}|".format(
-                       T2, ER, np.round(X[i][0], 2), np.round(X[i][1], 2), 
-                       np.round(normalize_X[i][0], 2), np.round(normalize_X[i][1], 2), np.round(Youts[i], 2)))
+                       T2, ER, np.round(X[i][0], 3), np.round(X[i][1], 3), 
+                       np.round(normalize_X[i][0], 3), np.round(normalize_X[i][1], 3), np.round(Youts[i], 3)))
+    
             i += 1
         print("-"*98)
     print("-"*98)
@@ -63,16 +71,19 @@ def main(args):
     
     #ERs = np.arange(0.2, 0.401, 0.05*args['number_points']/5)
     #T2s = np.arange(750, 901, int(50*args['number_points']/4))
-    T2s = np.arange(750, 901, 50)
-    ERs = np.round(np.arange(0.2, 0.401, 0.05), 2)
+    T2s = np.round(np.arange(750, 901, (900-750)/args['T2_number_points']), 5)
+    ERs = np.round(np.arange(0.2, 0.401, (0.4-0.2)/args['ER_number_points']), 5)
 
     optimize(ERs=ERs, T2s=T2s, f1=yC, f2=yLHV, alpha=args['alpha'])
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optimize two objective functions')
     parser.add_argument('--alpha', '-a', default=0.5, type=float, 
                         help='The alpha coeficient')
-    parser.add_argument('--number_points', '-n_points', default=5, 
+    parser.add_argument('--T2_number_points', '-T2_points', default=4, 
+                        type=int, help='The alpha coeficient')
+    parser.add_argument('--ER_number_points', '-ER_points', default=5, 
                         type=int, help='The alpha coeficient')
     args = vars(parser.parse_args())
 
