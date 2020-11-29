@@ -83,11 +83,11 @@ def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
     Z_C = Z = C_coefs['coef'][0]*X + C_coefs['coef'][1]*Y + C_coefs['intercept']
 
     # # Plot the surface.
-    surf = ax.plot_surface(X, Y, Z_LHV/(np.max(Z_LHV)+1), cmap=cm.coolwarm, label='LHV',
+    surf = ax.plot_surface(X, Y, (Z_LHV-np.min(Z_LHV)+1)/(np.max(Z_LHV)-np.min(Z_LHV)), cmap=cm.coolwarm, label='LHV',
                            linewidth=0, antialiased=False)
     # surf._facecolors2d=surf._facecolors3d
     # surf._edgecolors2d=surf._edgecolors3d
-    surf = ax.plot_surface(X, Y, Z_C/(np.max(Z_C)+1), cmap=cm.coolwarm, label='C',
+    surf = ax.plot_surface(X, Y, (Z_C-np.min(Z_C)+1)/(np.max(Z_C)-np.min(Z_C)), cmap=cm.coolwarm, label='C',
                            linewidth=0, antialiased=False)
 
     # Customize the z axis.
@@ -104,7 +104,7 @@ def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
     plt.show()
 
 
-def visualize(X, y, coef, intercept, label=None, linear=True):
+def visualize(X, y, coef, intercept, label=None, linear=True, isround=False):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     y = np.reshape(y, (-1, 1))
@@ -125,11 +125,18 @@ def visualize(X, y, coef, intercept, label=None, linear=True):
                            linewidth=0, antialiased=False)
 
     # Customize the z axis.
-    ax.set_zlim(-1+np.min(Z), np.max(Z)+1)
     ax.zaxis.set_major_locator(LinearLocator(10))
-    ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
     ax.set_xlabel("T2")
     ax.set_ylabel("ER")
+
+    if isround:
+        Z = Z.astype('int')
+        min_v = np.min(Z) + 1
+        max_v = np.max(Z) - 1
+        #ax.set_zticks([944, 1030, 1116, 1203, 1289, 1375, 1461, 1547, 1633, 1719])
+        ax.set_zticks(range(min_v, max_v, int((max_v-min_v)/10)))
+    else:
+        ax.set_zlim(-1+np.min(Z.astype('int')), np.max(Z.astype('int'))+1)
 
     # Add a color bar which maps values to colors.
     fig.colorbar(surf, shrink=0.5, aspect=5)
@@ -159,7 +166,7 @@ def main(args):
         X, y = get_LHV('./experimental_data/LowHitValues.txt')
         coef, intercept, score = polynorminal_regression(X, y)
         print(coef, intercept, score)
-        visualize(X.T, y, coef, intercept, label=name.upper(), linear=False)
+        visualize(X.T, y, coef, intercept, label=name.upper(), linear=False, isround=True)
     elif name == 'n1 lhv' or name == 'lhv n1':
         X_LHV, y_LHV = get_LHV('./experimental_data/LowHitValues.txt')
         coef_LHV, intercept_LHV, score_LHV = polynorminal_regression(X_LHV, y_LHV)
