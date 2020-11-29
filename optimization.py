@@ -1,34 +1,42 @@
 import numpy as np
 import argparse
-
-
-def yC(ER, T2):
-    return -0.0621*T2 - 12.749*ER + 88.407
-
-def yLHV(ER, T2):
-    return -2.784*T2 + 17319.514*ER + 0.003*T2**2 - 3.18*T2*ER - 25142.857*ER**2 - 583.95
+from get_experimental_values import get_values_n1
+from regression_experimental import get_LHV
 
 def yOut(f1, f2, alpha):
     return alpha*f1 + (1-alpha)*f2
 
 
-def optimize(ERs, T2s, f1, f2, alpha):
+def load_data():
+
+    _, yC = get_values_n1(path='experimental_data')
+    _, yLHV = get_LHV('./experimental_data/LowHitValues.txt')
+    return (yC, yLHV)
+
+
+def optimize(ERs, T2s, alpha):
     
     X = []
     ER_T2s = []
 
+    yC, yLHV = load_data()
+    
+    print(yC)
+
+    i = 0
     for T2 in T2s:
         for ER in ERs:
-            
-            yc = f1(ER=ER, T2=T2)
-            ylhv = f2(ER=ER, T2=T2)
-            
+        
             ER_T2s.append([ER, T2])
-            X.append(np.array([yc, ylhv]))
+            X.append(np.array([yC[i], yLHV[i]]))
+
+            i += 1
 
     X = np.array(X)
+    print(np.min(X, axis=0))
+    print(np.max(X, axis=0))
     #print(X)
-    normalize_X = (X - np.min(X, axis=0)+1)/(np.max(X, axis=0)-np.min(X, axis=0))
+    normalize_X = (X-np.min(X, axis=0)+1)/(np.max(X, axis=0)-np.min(X, axis=0))
     
     Youts = []
     for pair in normalize_X:
@@ -64,25 +72,16 @@ def optimize(ERs, T2s, f1, f2, alpha):
 
 def main(args):
     
-    #ERs = np.arange(0.2, 0.401, 0.05*args['number_points']/5)
-    #T2s = np.arange(750, 901, int(50*args['number_points']/4))
-    # T2s = [750, 800, 850, 900]
-    # ERs = [0.2, 0.25, 0.3, 0.35, 0.4]
+    T2s = [750, 800, 850, 900]
+    ERs = [0.2, 0.25, 0.3, 0.35, 0.4]
     
-    T2s = np.round(np.arange(750, 901, (900-750)/args['T2_number_points']), 5)
-    ERs = np.round(np.arange(0.2, 0.401, (0.4-0.2)/args['ER_number_points']), 5)
-    
-    optimize(ERs=ERs, T2s=T2s, f1=yC, f2=yLHV, alpha=args['alpha'])
+    optimize(ERs=ERs, T2s=T2s, alpha=args['alpha'])
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optimize two objective functions')
     parser.add_argument('--alpha', '-a', default=0.5, type=float, 
                         help='The alpha coeficient')
-    parser.add_argument('--T2_number_points', '-T2_points', default=4, 
-                        type=int, help='The alpha coeficient')
-    parser.add_argument('--ER_number_points', '-ER_points', default=5, 
-                        type=int, help='The alpha coeficient')
     args = vars(parser.parse_args())
 
     main(args)
