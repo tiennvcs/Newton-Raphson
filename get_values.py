@@ -47,7 +47,6 @@ def get_values(path, T2):
     LHVs = []
 
     for file in path_files:
-
         ER = list(map(float, file.rstrip(".txt").split(os.path.sep)[1].split("-")))[0]
 
         n1_values[ER] = []
@@ -58,10 +57,9 @@ def get_values(path, T2):
         n6_values[ER] = []
 
         with open(file, 'r') as f:
-            for line in f.readlines():
-
+            lines = [line for line in f.readlines() if line.strip()]
+            for line in lines:
                 values = np.array([float(value) for value in line.split()[1:]])
-
                 n1_values[ER].append(values[0])
                 n2_values[ER].append(values[1])
                 n3_values[ER].append(values[2])
@@ -109,8 +107,9 @@ def get_values_n1(path):
         n1_values = []
 
         with open(file, 'r') as f:
+            lines = [line for line in f.readlines() if line.strip()]
             n1_values = []
-            for line in f.readlines():
+            for line in lines:
                 values = np.array([float(value) for value in line.split()[1:]])
                 expectation = getExpectation(solution=values)
                 n1_values.append(expectation[0])
@@ -140,7 +139,8 @@ def get_values_n2(path):
 
         with open(file, 'r') as f:
             n2_values = []
-            for line in f.readlines():
+            lines = [line for line in f.readlines() if line.strip()]
+            for line in lines:
                 values = np.array([float(value) for value in line.split()[1:]])
                 expectation = getExpectation(solution=values)
                 n2_values.append(expectation[1])
@@ -170,7 +170,8 @@ def get_values_n3(path):
 
         with open(file, 'r') as f:
             n3_values = []
-            for line in f.readlines():
+            lines = [line for line in f.readlines() if line.strip()]
+            for line in lines:
                 values = np.array([float(value) for value in line.split()[1:]])
                 expectation = getExpectation(solution=values)
                 n3_values.append(expectation[2])
@@ -200,7 +201,8 @@ def get_values_n4(path):
 
         with open(file, 'r') as f:
             n4_values = []
-            for line in f.readlines():
+            lines = [line for line in f.readlines() if line.strip()]
+            for line in lines:
                 values = np.array([float(value) for value in line.split()[1:]])
                 expectation = getExpectation(solution=values)
                 n4_values.append(expectation[3])
@@ -230,7 +232,8 @@ def get_values_n6(path):
 
         with open(file, 'r') as f:
             n6_values = []
-            for line in f.readlines():
+            lines = [line for line in f.readlines() if line.strip()]
+            for line in lines:
                 values = np.array([float(value) for value in line.split()[1:]])
                 expectation = getExpectation(solution=values)
                 n6_values.append(expectation[5])

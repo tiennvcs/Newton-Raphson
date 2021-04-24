@@ -35,8 +35,6 @@ def get_theory_values(path: str, T2: float):
     return ERs
 
 def caculate_RMS(experimental_data: dict, theory_data: dict):
-    # print(experimental_data)
-    # print(theory_data)
     RMS_1 = np.sqrt(np.sum(np.square(theory_data[0.2] - experimental_data[0.2]) / len(theory_data[0.2])))
     RMS_2 = np.sqrt(np.sum(np.square(theory_data[0.25] - experimental_data[0.25]) / len(theory_data[0.25])))
     RMS_3 = np.sqrt(np.sum(np.square(theory_data[0.3] - experimental_data[0.3]) / len(theory_data[0.3])))
@@ -50,7 +48,6 @@ def main(args):
     path_experiments = "experimental_data"
     path_theory = "output_solutions"
     experimental_data = get_experimental_values(path_experiments, args.T2)
-    print(experimental_data)
     theory_data = get_theory_values(path=path_theory, T2=args.T2)
     RMSs = caculate_RMS(experimental_data=experimental_data, theory_data=theory_data)
     print(RMSs.T)
