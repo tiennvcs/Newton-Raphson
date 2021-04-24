@@ -116,7 +116,7 @@ def plot_graphs(path: str, T2: float):
     axes[1].legend(bbox_to_anchor=(0.5, 0.2), loc='lower center', ncol=6, handles=lns, labels=labs)
     
     ################################################################################################3
-    plt.subplots_adjust(bottom=0.25)
+    plt.subplots_adjust(bottom=0.25, wspace=0.4)
     plt.show()
 
 
