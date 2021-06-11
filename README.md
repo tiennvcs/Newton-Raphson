@@ -31,7 +31,7 @@ Output:
   Got the solution: ['0.701', '0.059', '0.213', '0.021', '0.324', '0.065']
 ```
 
-### 2. Plot the representation graph given $T_2$ value.
+### 2. Plot the representation graph given `T2` value.
 ```bash
   python plot_graph.py -T2 <value of T2>
 ```
