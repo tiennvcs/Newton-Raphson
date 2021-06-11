@@ -139,7 +139,7 @@ def visualize(X, y, coef, intercept, label=None, linear=True):
 def main(args):
     
     name = args.var
-    path = "output_solutions"
+    path = "running_data"
     
     if name == 'n1' or name == 'n4':
         X, y = get_data(name=name, path=path)

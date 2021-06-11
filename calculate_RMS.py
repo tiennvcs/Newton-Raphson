@@ -46,7 +46,7 @@ def caculate_RMS(experimental_data: dict, theory_data: dict):
 
 def main(args):
     path_experiments = "experimental_data"
-    path_theory = "output_solutions"
+    path_theory = "running_data"
     experimental_data = get_experimental_values(path_experiments, args.T2)
     theory_data = get_theory_values(path=path_theory, T2=args.T2)
     RMSs = caculate_RMS(experimental_data=experimental_data, theory_data=theory_data)
