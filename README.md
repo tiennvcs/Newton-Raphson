@@ -10,7 +10,7 @@ In that:
 - `n1, n2, n3, n4, n5, n6` are solution we need to found.
 
 ### Required tasks:
-- Task 1. Find the solution of system equations.
+- Task 1. Find the solution of system of equations.
 - Task 2. Plot the representtion graph of n1, n2, n3, n4, n6 at the particular T2 value when ER change.
 - Task 3. Regression the representation equation of `n1, n2, n3, n4, n6` with predictors are `T2, ER`
 - Task 4. Calculate the RMSE (Root mean square error) of regression equations found in task 4.
