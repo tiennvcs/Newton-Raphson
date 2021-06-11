@@ -40,6 +40,7 @@ For example, we want plot the graph representation at `T2 = 750`, just enter the
   python plot_graph.py -T2 750
 ```
 Output:
+
 ![Example plot graph](images/example_plot_graph.png)
 
 ### 3. Regression the representation equation for `n1, n2, n3, n4, n6` and lack of fit test for regression model.
@@ -51,6 +52,7 @@ Output:
   python regression.py -var n1
   ```
   Output:
+  
   ```bash
   OLS Regression Results
   ==============================================================================
