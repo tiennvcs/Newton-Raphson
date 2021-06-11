@@ -21,10 +21,10 @@ def get_experimental_values(path: str, T2: float):
                     ERs[float(values[0])] = np.round([float(value) for value in values[1:]], 2)
     return ERs
 
+
 def get_theory_values(path: str, T2: float):
 
     _, n1_percents, n2_percents, n3_percents, n4_percents, n6_percents = get_values(path=path, T2=T2)
-
     ERs = dict()
     ERs[0.2] = np.round([n1_percents[0], n2_percents[0], n3_percents[0], n4_percents[0], n6_percents[0]], 2)
     ERs[0.25] = np.round([n1_percents[1], n2_percents[1], n3_percents[1], n4_percents[1], n6_percents[1]], 2)
@@ -33,6 +33,7 @@ def get_theory_values(path: str, T2: float):
     ERs[0.4] = np.round([n1_percents[4], n2_percents[4], n3_percents[4], n4_percents[4], n6_percents[4]], 2)
 
     return ERs
+
 
 def caculate_RMS(experimental_data: dict, theory_data: dict):
     RMS_1 = np.sqrt(np.sum(np.square(theory_data[0.2] - experimental_data[0.2]) / len(theory_data[0.2])))

@@ -31,8 +31,8 @@ def getArguments():
     parser.add_argument("-ER", help="Hệ số không khí cấp", type=float, default=0.2) # 0.25, 0.3, 0.35, 0.4
     parser.add_argument("-T2", help="Nhiệu độ vừng khử", type=int, default=750)   # 750, 800, 850, 900
     parser.add_argument( "-init_values", help="The initial solution", default=np.array([random.uniform(1e6, 1e10)]*6))
-    parser.add_argument("-epsilon", help="The accuracy of method", default=1e-10)
-    parser.add_argument("-N", help="The number of iterations", default=1000)
+    parser.add_argument("-epsilon", help="The accuracy of method", default=1e-4)
+    parser.add_argument("-N", help="The number of iterations", default=1e4)
     parser.add_argument("--output", default='running_data/', help="The output file store found solution")
     args = parser.parse_args()
     return args
@@ -50,7 +50,7 @@ def get_solution_from_file(path):
 
 
 def display(x: np.ndarray, y: np.ndarray, n: int):
-	print(f"{n}th -- Solution: {x} -- The error: {LA.norm(y, ord=None)}")
+	print(f"{n}th : {x} -- Error: {LA.norm(y, ord=None)}")
 
 
 def check_constraints(x: np.ndarray):
@@ -81,29 +81,7 @@ def random_solution(ER: float, T2:float, alpha:float, beta:float):
 
 def get_solution_random(ER: float, T2: float, output: str):
     selected_solution = get_solution_from_file(output)
-    alpha = 140
-    beta = 2
-    solution = random_solution(ER, T2, alpha=alpha, beta=beta)
-    n = 0
-    count = 0
-    solutions = []
-    while count != 10:
-        n += 1
-
-        solution = random_solution(ER=ER, T2=T2, alpha=alpha, beta=beta)
-
-        check_exptected = check_constraints(x=solution)
-        if not check_exptected:
-            continue
-
-        count += 1
-
-        # Add the new found solution vector to result list.
-        solutions.append(solution)
-
-    print("Got the solution: {x}".format(x=selected_solution))
-
-    return solutions
+    return selected_solution
 
 
 def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
@@ -117,8 +95,12 @@ def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 		y = LA.solve(jacobi, Fx)
 		# Update solution
 		x = x - y
-		if LA.norm(y, ord=np.inf) <= epsilon:
-			return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
+		if np.all(x > 0):
+			if LA.norm(y, ord=np.inf) <= epsilon:
+				return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
+		else:
+		    x = random_solution(ER=ER, T2=T2, alpha=140, beta=2)
+		display(x=np.round(x, 4).tolist(), y=np.round(y, 4), n=n)
 		n = n + 1
 
 	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 0}
@@ -129,14 +111,15 @@ def main(args):
     np.set_printoptions(precision=4, linewidth=10)
     ER = float(args.ER)
     T2 = float(args.T2)
-    #x = args.init_values
-    #epsilon = float(args.epsilon)
-    #N = int(args.N)
+    x = args.init_values
+    epsilon = float(args.epsilon)
+    N = int(args.N)
 
-    #result = newton_raphson(x=x, epsilon=epsilon, N=N)
-    #print(result)
+    result = newton_raphson(x=x, epsilon=epsilon, N=N)
+
     output_file = os.path.join(args.output, "{ER}-{T2}.txt".format(ER=ER, T2=T2))
-    get_solution_random(ER=args.ER, T2=args.T2, output=output_file)
+    final_solution = get_solution_random(ER=args.ER, T2=args.T2, output=output_file)
+    print("Got the final solution: ", final_solution)
 
 
 if __name__ == "__main__":
