@@ -2,7 +2,7 @@
 
 ## Problem definition
 ----
-![System of equations](system_equations.png)
+![System of equations](images/system_equations.png)
 
 In that:
 - `𝑎,𝑤,𝑞,𝑑𝐻𝑡𝑟𝑎𝑢,𝑑𝐻𝐻2𝑂(𝑙),𝑑𝐻𝐻2𝑂(𝑘) is constants`.
@@ -35,14 +35,14 @@ Output:
 ```bash
   python plot_graph.py -T2 <value of T2>
 ```
-For example, we want plot the graph representation at T2 = 750, just enter the following command:
+For example, we want plot the graph representation at `T2 = 750`, just enter the following command:
 ```bash
   python plot_graph.py -T2 750
 ```
 Output:
 ![Example plot graph](images/example_plot_graph.png)
 
-### 3. Regression the representation equation for $n_1, n_2, n_3, n_4, n_6$ and lack of fit test for regression model.
+### 3. Regression the representation equation for `n1, n2, n3, n4, n6` and lack of fit test for regression model.
 ```bash
   python regression.py -var <select variable>
   ```
