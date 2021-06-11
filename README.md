@@ -28,6 +28,9 @@ For example, we want find the solution `[n1,n2,n3,n4,n5]` at `ER = 0.2 and T2 = 
 Output:
 ```bash
   ['.\\main.py', '-ER', '0.2', '-T2', '750']
+  1th : [0.0629, 0.8548, 0.4853, 0.2639, 0.869, 0.1023] -- Error: 16381299757.963419
+  ...
+  9999th : [0.6417, 0.5289, 0.4891, 0.3652, 0.1285, 0.9446] -- Error: 6.155127421914188
   Got the solution: ['0.701', '0.059', '0.213', '0.021', '0.324', '0.065']
 ```
 
@@ -97,7 +100,12 @@ For example, if we want to calculate the RMSE at `T2 = 750`, just enter followin
 ```
 Output:
 ```bash
-  [1.2560414  1.58032275 1.8798617  1.77277184 1.72108106]
+  - The RMSE of C: 2.6275920535730055
+  - The RMSE of H2: 0.5638262143604181 
+  - The RMSE of CO: 2.3626002624227396 
+  - The RMSE of CO2: 0.5321090113877043
+  - The RMSE of CH4: 0.7915933299365279
+  - The Sum RMSE: 1.6201182672879175
 ```
 
 <b>Contact information</b>: tiennvuit@gmail.com
