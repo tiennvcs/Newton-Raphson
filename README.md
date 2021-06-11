@@ -21,7 +21,7 @@ In that:
 ```bash
   python main.py -ER <Value of ER> -T2 <Value of T2>
 ```
-For example, we want find the solution [n1,n2,n3,n4,n5] at ER = 0.2 and T2 = 750, just enter the following command:
+For example, we want find the solution [n1,n2,n3,n4,n5] at `ER = 0.2 and T2 = 750`, just enter the following command:
 ```bash
   python main.py -ER 0.2 -T2 750
 ```
@@ -46,7 +46,7 @@ Output:
 ```bash
   python regression.py -var <select variable>
   ```
-  For example, if we want regression the equation of n1, just enter following command:
+  For example, if we want regression the equation of `n1`, just enter following command:
   ```bash
   python regression.py -var n1
   ```
@@ -89,7 +89,7 @@ Output:
 ```bash
 python calculate_RMS.py -T2 <value of T2>
 ```
-For example, if we want to calculate the RMSE at T2 = 750, just enter following command:
+For example, if we want to calculate the RMSE at `T2 = 750`, just enter following command:
 ```bash
 python calculate_RMS.py -T2 750
 ```
@@ -97,6 +97,5 @@ Output:
 ```bash
 [1.2560414  1.58032275 1.8798617  1.77277184 1.72108106]
 ```
-
 
 <b>Contact information</b>: tiennvuit@gmail.com
