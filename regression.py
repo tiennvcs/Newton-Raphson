@@ -1,13 +1,13 @@
 import numpy as np
 import argparse
-from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from matplotlib import pyplot as plt
-from mpl_toolkits.mplot3d import axes3d
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
-
 from get_values import get_values_n1, get_values_n2, get_values_n3, get_values_n4, get_values_n6
+import pandas as pd
+from statsmodels.formula.api import ols
+import statsmodels.api as sm
 
 
 n_i = {
@@ -28,46 +28,43 @@ def getArguments():
 
 
 def get_LHV(file_path):
-
     with open(file_path, 'r') as f:
         f.readline()
         content = f.readlines()
-
     X = []
     y = []
-
     for line in content:
         T2, ER, LHV = line.rstrip().split()
-
         X.append(np.array([float(T2), float(ER)]))
         y.append(float(LHV))
-
     return np.array(X), np.array(y)
 
 
 def get_data(name: str, path: str):
-
     get_values = n_i[name]
-
     X, y = get_values(path)
-
     X = np.array(X)
     y = np.array(y)
-
     return X, y
 
+
 def linear_regression(X, y):
-    reg = LinearRegression()
-    reg.fit(X, y)
-    return reg.coef_, reg.intercept_, reg.score(X, y)
+    # reg = LinearRegression()
+    # reg.fit(X, y)
+    # return reg.coef_, reg.intercept_, reg.score(X, y)
+    data = pd.DataFrame({'x': X[:,0].flatten(), 'y': X[:, 1].flatten(), 'z': y.flatten()})
+    model = ols("z ~ x + y", data).fit()
+    print(model.summary())
+    return (model._results.params[1:], model._results.params[0], model._results.rsquared)
 
 
 def polynorminal_regression(X, y):
     poly = PolynomialFeatures(2)
-    features = poly.fit_transform(X)
-    reg = LinearRegression()
-    reg.fit(features, y)
-    return reg.coef_.tolist(), reg.intercept_, reg.score(features, y)
+    X = poly.fit_transform(X)
+    model = sm.OLS(y, X)
+    results = model.fit()
+    print(results.summary())
+    return (results.params[1:], results.params[0], results.rsquared)
 
 
 def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
@@ -121,9 +118,9 @@ def visualize(X, y, coef, intercept, label=None, linear=True):
     if linear:
         Z = coef[0] * X + coef[1] * Y + intercept
     else:
-        Z = coef[0] * 1 + coef[1] * X + coef[2] * Y + coef[3] * X**2 + coef[4] * X * Y + coef[5] * Y**2 + intercept
+        Z = coef[0] * X + coef[1] * Y + coef[2] * X**2 + coef[3] * X * Y + coef[4] * Y**2 + intercept
 
-    # # Plot the surface.
+    # Plot the surface.
     surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
                            linewidth=0, antialiased=False)
 
@@ -133,13 +130,9 @@ def visualize(X, y, coef, intercept, label=None, linear=True):
     ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
     ax.set_xlabel("T2")
     ax.set_ylabel("ER")
-
-    # Add a color bar which maps values to colors.
     fig.colorbar(surf, shrink=0.5, aspect=5)
 
     ax.set_title(r'The ${}$ representation and The approximate function'.format(label))
-
-    #ax.legend(label)
     plt.show()
 
 
@@ -150,7 +143,7 @@ def main(args):
     
     if name == 'n1' or name == 'n4':
         X, y = get_data(name=name, path=path)
-        coef, intercept, score = linear_regression(X, y)
+        coef, intercept, score  = linear_regression(X, y)
         print(coef, intercept, score)
         visualize(X.T, y, coef, intercept, label=name, linear=True)
     elif name == 'n2' or name == 'n3' or name == 'n6':

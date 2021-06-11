@@ -122,5 +122,5 @@ def plot_graphs(path: str, T2: float):
 
 if __name__ == '__main__':
     args = get_argument()
-    path = "output_solutions"
+    path = "running_data"
     plot_graphs(path=path, T2=float(args.T2))

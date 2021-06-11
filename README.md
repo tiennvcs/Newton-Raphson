@@ -1,16 +1,18 @@
-# Thuật toán Newton-Raspson
+# Newton Raphson solve system of equations and Regression models.
 
-- Link bài toán: <a href="https://drive.google.com/open?id=1B5ohvPdgIiZMS4lDLwh8sz4G6-ACEnA_">Newton Raspson</a>
+## Problem definition
 
-- Thực thi chương trình
 
-```
-python main.py
-```
+## Features
 
-- Chỉ rõ các thông số cụ thể
-
+### 1. Solve the system of equations given $T_2$, $ER$.
 ```bash
-python main.py -ER 0.2 -T2 750 -epsilon 1e-6 -N 1000
+python
 ```
+
+### 2. Plot the representation graph given $T_2$ value.
+
+### 3. Regression the representation equation for $n_1, n_2, n_3, n_4, n_6$.
+
+### 4. Lack of fit test
 

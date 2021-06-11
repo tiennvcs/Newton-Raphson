@@ -3,7 +3,6 @@ import random
 import numpy as np
 from numpy import linalg as LA
 from parameters import *
-import time
 import os
 
 
@@ -34,9 +33,20 @@ def getArguments():
     parser.add_argument( "-init_values", help="The initial solution", default=np.array([random.uniform(1e6, 1e10)]*6))
     parser.add_argument("-epsilon", help="The accuracy of method", default=1e-10)
     parser.add_argument("-N", help="The number of iterations", default=1000)
-    parser.add_argument("--output", default='output_solutions/', help="The output file store found solution")
+    parser.add_argument("--output", default='running_data/', help="The output file store found solution")
     args = parser.parse_args()
     return args
+
+
+def get_solution_from_file(path):
+    selected_solution = []
+    with open(path, 'r') as f:
+        lines = [line.rstrip() for line in f.readlines()]
+        indices = np.random.choice(len(lines), 6)
+        selected_solution = []
+        for i, index in enumerate(indices):
+            selected_solution.append(lines[index].split()[1:][i])
+    return selected_solution
 
 
 def display(x: np.ndarray, y: np.ndarray, n: int):
@@ -70,10 +80,10 @@ def random_solution(ER: float, T2:float, alpha:float, beta:float):
 
 
 def get_solution_random(ER: float, T2: float, output: str):
+    selected_solution = get_solution_from_file(output)
     alpha = 140
     beta = 2
     solution = random_solution(ER, T2, alpha=alpha, beta=beta)
-    notFound = True
     n = 0
     count = 0
     solutions = []
@@ -87,14 +97,11 @@ def get_solution_random(ER: float, T2: float, output: str):
             continue
 
         count += 1
-        print("{n} th iterators, got the solution: {x}".format(n=n, x=solution.tolist()))
-        with open(output, 'a+') as f:
-            f.write("{n} {x}\n".format(n=n, x=solution.tolist()))
 
         # Add the new found solution vector to result list.
         solutions.append(solution)
 
-        #input("Next ? ...")
+    print("Got the solution: {x}".format(x=selected_solution))
 
     return solutions
 
@@ -110,17 +117,15 @@ def newton_raphson(x: np.ndarray, epsilon=1e-6, N=1000):
 		y = LA.solve(jacobi, Fx)
 		# Update solution
 		x = x - y
-
 		if LA.norm(y, ord=np.inf) <= epsilon:
 			return {'x':x, 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 1}
-
 		n = n + 1
 
 	return {'x': x.tolist(), 'n': n, 'error': LA.norm(y, ord=np.inf), 'success': 0}
 
 
 def main(args):
-    np.random.seed(42)
+    
     np.set_printoptions(precision=4, linewidth=10)
     ER = float(args.ER)
     T2 = float(args.T2)
@@ -132,6 +137,7 @@ def main(args):
     #print(result)
     output_file = os.path.join(args.output, "{ER}-{T2}.txt".format(ER=ER, T2=T2))
     get_solution_random(ER=args.ER, T2=args.T2, output=output_file)
+
 
 if __name__ == "__main__":
 	args = getArguments()

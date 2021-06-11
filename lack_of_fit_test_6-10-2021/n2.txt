@@ -1,0 +1,33 @@
+ OLS Regression Results
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.987
+Model:                            OLS   Adj. R-squared:                  0.983
+Method:                 Least Squares   F-statistic:                     215.6
+Date:                Thu, 10 Jun 2021   Prob (F-statistic):           9.95e-13
+Time:                        20:56:18   Log-Likelihood:                 15.557
+No. Observations:                  20   AIC:                            -19.11
+Df Residuals:                      14   BIC:                            -13.14
+Df Model:                           5
+Covariance Type:            nonrobust
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         35.5690      8.298      4.287      0.001      17.772      53.366
+x1            -0.0993      0.020     -5.031      0.000      -0.142      -0.057
+x2            28.4389      7.535      3.774      0.002      12.277      44.600
+x3          6.886e-05   1.19e-05      5.795      0.000    4.34e-05    9.43e-05
+x4             0.0076      0.008      1.014      0.328      -0.008       0.024
+x5           -55.7214      7.102     -7.846      0.000     -70.953     -40.490
+==============================================================================
+Omnibus:                        2.654   Durbin-Watson:                   2.786
+Prob(Omnibus):                  0.265   Jarque-Bera (JB):                1.326
+Skew:                          -0.612   Prob(JB):                        0.515
+Kurtosis:                       3.303   Cond. No.                     2.23e+08
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 2.23e+08. This might indicate that there are
+strong multicollinearity or other numerical problems.
+[-9.93310000e-02  2.84388571e+01  6.88600000e-05  7.62000000e-03
+ -5.57214286e+01] 35.56902857143666 0.9871821619412615

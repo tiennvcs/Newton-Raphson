@@ -1,0 +1,29 @@
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:                      z   R-squared:                       0.936
+Model:                            OLS   Adj. R-squared:                  0.929
+Method:                 Least Squares   F-statistic:                     124.9
+Date:                Thu, 10 Jun 2021   Prob (F-statistic):           6.87e-11
+Time:                        20:57:25   Log-Likelihood:                 17.616
+No. Observations:                  20   AIC:                            -29.23
+Df Residuals:                      17   BIC:                            -26.24
+Df Model:                           2
+Covariance Type:            nonrobust
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -2.0087      0.374     -5.367      0.000      -2.798      -1.219
+x              0.0033      0.000      7.590      0.000       0.002       0.004
+y              4.7680      0.344     13.861      0.000       4.042       5.494
+==============================================================================
+Omnibus:                        0.511   Durbin-Watson:                   2.119
+Prob(Omnibus):                  0.775   Jarque-Bera (JB):                0.526
+Skew:                          -0.320   Prob(JB):                        0.769
+Kurtosis:                       2.530   Cond. No.                     1.39e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.39e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
+[3.3024e-03 4.7680e+00] -2.0086799999999982 0.9362668152696966
