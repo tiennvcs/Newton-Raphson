@@ -6,8 +6,8 @@
 
 In that:
 - `𝑎,𝑤,𝑞,𝑑𝐻𝑡𝑟𝑎𝑢,𝑑𝐻𝐻2𝑂(𝑙),𝑑𝐻𝐻2𝑂(𝑘) is constants`.
-- 𝐾1,𝐾2,𝑑𝐻𝐻2,𝑑𝐻𝐶𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐻2𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐶𝐻4 ,𝑑𝐻𝑁2 is the parameters determined when know ER and T2
-- n1, n2, n3, n4, n5, n6 are solution we need to found.
+- `𝐾1,𝐾2,𝑑𝐻𝐻2,𝑑𝐻𝐶𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐻2𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐶𝐻4 ,𝑑𝐻𝑁2` is the parameters determined when know `ER` and `T2`
+- `n1, n2, n3, n4, n5, n6` are solution we need to found.
 
 ### Required tasks:
 - Task 1. Find the solution of system equations.
