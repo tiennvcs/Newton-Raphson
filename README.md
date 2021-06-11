@@ -5,13 +5,13 @@
 ![System of equations](images/system_equations.png)
 
 In that:
-- `𝑎,𝑤,𝑞,𝑑𝐻𝑡𝑟𝑎𝑢,𝑑𝐻𝐻2𝑂(𝑙),𝑑𝐻𝐻2𝑂(𝑘) is constants`.
-- `𝐾1,𝐾2,𝑑𝐻𝐻2,𝑑𝐻𝐶𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐻2𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐶𝐻4 ,𝑑𝐻𝑁2` is the parameters determined when know `ER` and `T2`
-- `n1, n2, n3, n4, n5, n6` are solution we need to found.
+  - `𝑎,𝑤,𝑞,𝑑𝐻𝑡𝑟𝑎𝑢,𝑑𝐻𝐻2𝑂(𝑙),𝑑𝐻𝐻2𝑂(𝑘) is constants`.
+  - `𝐾1,𝐾2,𝑑𝐻𝐻2,𝑑𝐻𝐶𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐻2𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐶𝐻4 ,𝑑𝐻𝑁2` is the parameters determined when know `ER` and `T2`
+  - `n1, n2, n3, n4, n5, n6` are solution we need to found.
 
 ### Required tasks:
 - Task 1. Find the solution of system of equations.
-- Task 2. Plot the representtion graph of n1, n2, n3, n4, n6 at the particular T2 value when ER change.
+- Task 2. Plot the representtion graph of `n1, n2, n3, n4, n6` at the particular T2 value when ER change.
 - Task 3. Regression the representation equation of `n1, n2, n3, n4, n6` with predictors are `T2, ER`
 - Task 4. Calculate the RMSE (Root mean square error) of regression equations found in task 4.
 
@@ -21,7 +21,7 @@ In that:
 ```bash
   python main.py -ER <Value of ER> -T2 <Value of T2>
 ```
-For example, we want find the solution [n1,n2,n3,n4,n5] at `ER = 0.2 and T2 = 750`, just enter the following command:
+For example, we want find the solution `[n1,n2,n3,n4,n5]` at `ER = 0.2 and T2 = 750`, just enter the following command:
 ```bash
   python main.py -ER 0.2 -T2 750
 ```
@@ -87,15 +87,15 @@ Output:
 
 ### 4. Calculate Root Mean Square Error of each variables given `T2`.
 ```bash
-python calculate_RMS.py -T2 <value of T2>
+  python calculate_RMS.py -T2 <value of T2>
 ```
 For example, if we want to calculate the RMSE at `T2 = 750`, just enter following command:
 ```bash
-python calculate_RMS.py -T2 750
+  python calculate_RMS.py -T2 750
 ```
 Output:
 ```bash
-[1.2560414  1.58032275 1.8798617  1.77277184 1.72108106]
+  [1.2560414  1.58032275 1.8798617  1.77277184 1.72108106]
 ```
 
 <b>Contact information</b>: tiennvuit@gmail.com
