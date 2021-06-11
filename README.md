@@ -2,15 +2,15 @@
 
 ## Problem definition
 ----
-![System of equations](system_equations.png)
+![System of equations](images/system_equations.png)
 
 In that:
 - `𝑎,𝑤,𝑞,𝑑𝐻𝑡𝑟𝑎𝑢,𝑑𝐻𝐻2𝑂(𝑙),𝑑𝐻𝐻2𝑂(𝑘) is constants`.
-- 𝐾1,𝐾2,𝑑𝐻𝐻2,𝑑𝐻𝐶𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐻2𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐶𝐻4 ,𝑑𝐻𝑁2 is the parameters determined when know ER and T2
-- n1, n2, n3, n4, n5, n6 are solution we need to found.
+- `𝐾1,𝐾2,𝑑𝐻𝐻2,𝑑𝐻𝐶𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐻2𝑂,𝑑𝐻𝐶𝑂2,𝑑𝐻𝐶𝐻4 ,𝑑𝐻𝑁2` is the parameters determined when know `ER` and `T2`
+- `n1, n2, n3, n4, n5, n6` are solution we need to found.
 
 ### Required tasks:
-- Task 1. Find the solution of system equations.
+- Task 1. Find the solution of system of equations.
 - Task 2. Plot the representtion graph of n1, n2, n3, n4, n6 at the particular T2 value when ER change.
 - Task 3. Regression the representation equation of `n1, n2, n3, n4, n6` with predictors are `T2, ER`
 - Task 4. Calculate the RMSE (Root mean square error) of regression equations found in task 4.
@@ -35,14 +35,14 @@ Output:
 ```bash
   python plot_graph.py -T2 <value of T2>
 ```
-For example, we want plot the graph representation at T2 = 750, just enter the following command:
+For example, we want plot the graph representation at `T2 = 750`, just enter the following command:
 ```bash
   python plot_graph.py -T2 750
 ```
 Output:
 ![Example plot graph](images/example_plot_graph.png)
 
-### 3. Regression the representation equation for $n_1, n_2, n_3, n_4, n_6$ and lack of fit test for regression model.
+### 3. Regression the representation equation for `n1, n2, n3, n4, n6` and lack of fit test for regression model.
 ```bash
   python regression.py -var <select variable>
   ```
