@@ -11,17 +11,30 @@ import statsmodels.api as sm
 
 
 n_i = {
-    "n1":get_values_n1,
-    "n2":get_values_n2,
-    "n3":get_values_n3,
-    "n4":get_values_n4,
-    "n6":get_values_n6,
+    "n_1":get_values_n1,
+    "n_2":get_values_n2,
+    "n_3":get_values_n3,
+    "n_4":get_values_n4,
+    "n_6":get_values_n6,
 }
+
+
+VAR2NAME = {
+    "n_1": 'C',
+    "n_2": 'H_2',
+    "n_3": 'CO',
+    "n_4": 'CO_2',
+    "n_6": 'CH_4',
+    'lhv': 'LHV',
+    'lhv n_1': 'C and LHV',
+    'n_1 lhv': 'LHV \ and \ C',
+}
+
 
 def getArguments():
     parser = argparse.ArgumentParser(description="Solve equation system using Newton-Raphson")
     parser.add_argument("-var", default="n1",
-                        choices=['n1', 'n2', 'n3', 'n4', 'n6', 'lhv', 'n1 lhv', 'lhv n1'],
+                        choices=['n_1', 'n_2', 'n_3', 'n_4', 'n_6', 'lhv', 'n_1 lhv', 'lhv n_1'],
                         help="The function need find")
     parser.add_argument("--linear", '-li', type=int, default=1, help="Linear or non-linear regression algorithm")
     return parser.parse_args()
@@ -64,10 +77,11 @@ def polynorminal_regression(X, y):
     model = sm.OLS(y, X)
     results = model.fit()
     print(results.summary())
+
     return (results.params[1:], results.params[0], results.rsquared)
 
 
-def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
+def visualize2Equation(label, LHV, Cs, LHV_coefs, C_coefs):
     
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -76,8 +90,8 @@ def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
     Y = np.linspace(0.19, 0.41, 1000)
     X, Y = np.meshgrid(X, Y)
     
-    Z_LHV = LHV_coefs['coef'][0]*1 + LHV_coefs['coef'][1]*X + LHV_coefs['coef'][2] * Y + LHV_coefs['coef'][3] * X**2 + LHV_coefs['coef'][4]*X*Y + LHV_coefs['coef'][5] *Y**2 + LHV_coefs['intercept']
-    Z_C = Z = C_coefs['coef'][0]*X + C_coefs['coef'][1]*Y + C_coefs['intercept']
+    Z_LHV = LHV_coefs['coef'][0]*X + LHV_coefs['coef'][1] * Y + LHV_coefs['coef'][2] * X**2 + LHV_coefs['coef'][3]*X*Y + LHV_coefs['coef'][4] *Y**2 + LHV_coefs['intercept']
+    Z_C   = C_coefs['coef'][0]*X + C_coefs['coef'][1]*Y + C_coefs['intercept']
 
     # # Plot the surface.
     surf = ax.plot_surface(X, Y, Z_LHV/(np.max(Z_LHV)+1), cmap=cm.coolwarm, label='LHV',
@@ -92,15 +106,14 @@ def visualize2Equation(LHV, Cs, LHV_coefs, C_coefs):
     ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
     ax.set_xlabel("T2")
     ax.set_ylabel("ER")
-    surf._facecolors2d=surf._facecolors3d
-    surf._edgecolors2d=surf._edgecolors3d
 
     # Add a color bar which maps values to colors.
     fig.colorbar(surf, shrink=0.5, aspect=5)
+    ax.zaxis.set_major_locator(LinearLocator(10))
+    ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+    
+    ax.set_title(r'Approximation function of ${}$ and ${}$'.format(VAR2NAME[label].split()[0], VAR2NAME[label].split()[-1]), color='b', fontsize=14)
 
-    #ax.set_title(r'The ${}$ representation and The approximate function'.format(label))
-
-    ax.legend()
     plt.show()
 
 
@@ -132,7 +145,7 @@ def visualize(X, y, coef, intercept, label=None, linear=True):
     ax.set_ylabel("ER")
     fig.colorbar(surf, shrink=0.5, aspect=5)
 
-    ax.set_title(r'The ${}$ representation and The approximate function'.format(label))
+    ax.set_title(r'Approximation function of ${}$'.format(VAR2NAME[label]), color='b', fontsize=14)
     plt.show()
 
 
@@ -141,12 +154,12 @@ def main(args):
     name = args.var
     path = "running_data"
     
-    if name == 'n1' or name == 'n4':
+    if name == 'n_1' or name == 'n_4':
         X, y = get_data(name=name, path=path)
         coef, intercept, score  = linear_regression(X, y)
         print(coef, intercept, score)
         visualize(X.T, y, coef, intercept, label=name, linear=True)
-    elif name == 'n2' or name == 'n3' or name == 'n6':
+    elif name == 'n_2' or name == 'n_3' or name == 'n_6':
         X, y = get_data(name=name, path=path)
         coef, intercept, score = polynorminal_regression(X, y)
         print(coef, intercept, score)
@@ -155,15 +168,15 @@ def main(args):
         X, y = get_LHV('./experimental_data/LowHitValues.txt')
         coef, intercept, score = polynorminal_regression(X, y)
         print(coef, intercept, score)
-        visualize(X.T, y, coef, intercept, label=name.upper(), linear=False)
-    elif name == 'n1 lhv' or name == 'lhv n1':
+        visualize(X.T, y, coef, intercept, label=name, linear=False)
+    elif name == 'n_1 lhv' or name == 'lhv n_1':
         X_LHV, y_LHV = get_LHV('./experimental_data/LowHitValues.txt')
         coef_LHV, intercept_LHV, score_LHV = polynorminal_regression(X_LHV, y_LHV)
         print("The coefficients of yLHV equation:", coef_LHV, intercept_LHV, score_LHV)
-        X_C, y_C = get_data(name='n1', path=path)
+        X_C, y_C = get_data(name='n_1', path=path)
         coef_C, intercept_C, score_C = linear_regression(X_C, y_C)
         print("The coefficients of yC equation:", coef_C, intercept_C, score_C)
-        visualize2Equation({'X_LHV':X_LHV, 'y_LHV':y_LHV}, {'X_C':X_C, 'y_C':y_C}, 
+        visualize2Equation(name, {'X_LHV':X_LHV, 'y_LHV':y_LHV}, {'X_C':X_C, 'y_C':y_C}, 
                 {'coef': coef_LHV, 'intercept':intercept_LHV, 'score':score_LHV}, 
                 {'coef':coef_C, 'intercept':intercept_C, 'score':score_C})
 
