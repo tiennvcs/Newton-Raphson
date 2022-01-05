@@ -108,4 +108,4 @@ Output:
   - The Sum RMSE: 1.6201182672879175
 ```
 
-<b>Contact information</b>: tiennvuit@gmail.com
+_<b>Contact information</b>: tiennvcs@gmail.com_
